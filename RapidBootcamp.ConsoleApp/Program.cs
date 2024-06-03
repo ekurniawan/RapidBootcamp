@@ -124,50 +124,112 @@
 //    Minggu = 7
 //}
 
-using RapidBootcamp.ConsoleApp;
+//using RapidBootcamp.ConsoleApp;
 
-Console.Write("Masukan Jumlah Matakuliah: ");
-int jumlah = Convert.ToInt32(Console.ReadLine());
+//Console.Write("Masukan Jumlah Matakuliah: ");
+//int jumlah = Convert.ToInt32(Console.ReadLine());
 
-double sumOfScore = 0;
+//List<double> lstScore = new List<double>();
 
-for (int i = 1; i <= jumlah; i++)
-{
+//for (int i = 0; i < jumlah; i++)
+//{
+//    Console.Write($"Masukan Nilai Matakuliah {i + 1} (1-100) :");
+//    lstScore.Add(Convert.ToDouble(Console.ReadLine()));
+//}
 
-    Console.Write($"Masukan Nilai Matakuliah {i} (1-100) :");
-    sumOfScore += Convert.ToDouble(Console.ReadLine());
-}
+//try
+//{
+//    double sumOfScore = 0;
+//    foreach (double score in lstScore)
+//    {
+//        sumOfScore += score;
+//    }
 
-double score = sumOfScore / jumlah;
+//    Stack<int> stackNumber = new Stack<int>();
+//    stackNumber.Push(12);
+//    stackNumber.Push(20);
+//    stackNumber.Push(25);
 
-string grade = CalculateGrade(score);
+//    Console.WriteLine(stackNumber.Pop());
 
-Console.WriteLine($"Score: {score} - Grade: {grade}");
+//    Queue<int> queue = new Queue<int>();
+//    queue.Enqueue(1);
+//    queue.Enqueue(2);
+//    queue.Enqueue(3);
+//    queue.Enqueue(4);
 
+//    Console.WriteLine(queue.Dequeue());
 
-string CalculateGrade(double score)
-{
-    if (score >= 86 && score <= 100)
-    {
-        grade = "A";
-    }
-    else if (score >= 71 && score <= 85)
-    {
-        grade = "B";
-    }
-    else if (score >= 56 && score <= 70)
-    {
-        grade = "C";
-    }
-    else if (score >= 40 && score <= 55)
-    {
-        grade = "D";
-    }
-    else
-    {
-        grade = "E";
-    }
-    return grade;
-}
+//    List<string> lstNames = new List<string>();
+//    lstNames.Add("Erick");
+//    lstNames.Add("Agus");
+
+//    Console.WriteLine(lstNames[0]);
+
+//    Dictionary<string, int> shoppingCart = new Dictionary<string, int>();
+//    shoppingCart["P001"] = 2;
+//    shoppingCart["K002"] = 3;
 
 
+//    string gradeResult = CalculateGrade(sumOfScore);
+//    Console.WriteLine($"Score: {sumOfScore} - Grade: {gradeResult}");
+
+//    DisplayRandomNumbers();
+
+//    //Helper myHelper = new Helper();
+//    //double luasSegitiga = myHelper.HitungLuasSegitiga(10, 5);
+//    //double luasPersegi = myHelper.HitungLuasPersegi(10);
+//    double luasSegitiga = Helper.HitungLuasSegitiga(10, 5);
+//    double luasPersegi = Helper.HitungLuasPersegi(10);
+//    Console.WriteLine($"luas segitiga: {luasSegitiga}, luasPersegi: {luasPersegi}");
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine($"{ex.Message}");
+//}
+
+//string CalculateGrade(double score)
+//{
+//    string grade = string.Empty;
+//    if (score >= 86 && score <= 100)
+//    {
+//        grade = "A";
+//    }
+//    else if (score >= 71 && score <= 85)
+//    {
+//        grade = "B";
+//    }
+//    else if (score >= 56 && score <= 70)
+//    {
+//        grade = "C";
+//    }
+//    else if (score >= 40 && score <= 55)
+//    {
+//        grade = "D";
+//    }
+//    else
+//    {
+//        grade = "E";
+//    }
+//    return grade;
+//}
+
+//void DisplayRandomNumbers()
+//{
+//    Random random = new Random();
+
+//    for (int i = 0; i < 5; i++)
+//    {
+//        Console.Write($"{random.Next(1, 100)} ");
+//    }
+//}
+
+
+using RapidBootcamp.ConsoleApp.Domain;
+
+Student student1 = new Student();
+//student1.setNim("9988998899");
+//student1.setName("Erick Kurniawan");
+student1.Nim = "9988998899";
+student1.Name = "Erick Kurniawan";
+Console.WriteLine(student1.Nim + " " + student1.Name);

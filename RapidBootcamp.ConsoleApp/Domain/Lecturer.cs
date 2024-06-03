@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RapidBootcamp.ConsoleApp
+namespace RapidBootcamp.ConsoleApp.Domain
 {
     public class Lecturer
     {
@@ -12,4 +12,4 @@ namespace RapidBootcamp.ConsoleApp
         public string LecturerName { get; set; }
     }
 }
-}
+
