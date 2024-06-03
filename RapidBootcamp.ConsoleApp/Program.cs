@@ -248,18 +248,48 @@ Lecturer lecturer2 = new Lecturer(2, "Bams", "Jogja");
 
 //student1.setNim("9988998899");
 //student1.setName("Erick Kurniawan");
-try
+//try
+//{
+//    student1.Nim = "9988998899";
+//    student1.Name = "Erick Kurniawan";
+//    student1.Address = "Redmond WA";
+//    Console.WriteLine(student1.Nim + "\n" + student1.Name + "\n" + student1.Address);
+//    Console.WriteLine($"{student2.Nim}\n{student2.Name}\n{student2.Address}");
+//    Console.WriteLine($"{student3.Nim}\n{student3.Name}\n{student3.Address}");
+//    Console.WriteLine($"{student4.Nim}\n{student4.Name}\n{student4.Address}");
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine($"Error: {ex.Message}");
+//}
+
+//POCO
+List<Student> lstStudents = new List<Student>();
+
+Console.Write("Masukan Jumlah Student: ");
+int jumlah = Convert.ToInt32(Console.ReadLine());
+int counter = 0;
+while (counter < jumlah)
 {
-    student1.Nim = "9988998899";
-    student1.Name = "Erick Kurniawan";
-    student1.Address = "Redmond WA";
-    Console.WriteLine(student1.Nim + "\n" + student1.Name + "\n" + student1.Address);
-    Console.WriteLine($"{student2.Nim}\n{student2.Name}\n{student2.Address}");
-    Console.WriteLine($"{student3.Nim}\n{student3.Name}\n{student3.Address}");
-    Console.WriteLine($"{student4.Nim}\n{student4.Name}\n{student4.Address}");
+    Student newStudent = new Student();
+    Console.Write("Masukan Nim: ");
+    newStudent.Nim = Console.ReadLine();
+    Console.Write("Masukan Nama: ");
+    newStudent.Name = Console.ReadLine();
+    Console.Write("Masukan Address: ");
+    newStudent.Address = Console.ReadLine();
+
+    lstStudents.Add(newStudent);
+    counter++;
 }
-catch (Exception ex)
+
+Console.WriteLine("-----------------------------------------------------------");
+Console.WriteLine("Nim\tNama\tAddress");
+foreach (Student student in lstStudents)
 {
-    Console.WriteLine($"Error: {ex.Message}");
+    Console.WriteLine($"{student.Nim} - {student.Name} - {student.Address}");
 }
+
+
+
 
