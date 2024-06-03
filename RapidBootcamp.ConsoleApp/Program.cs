@@ -124,6 +124,8 @@
 //    Minggu = 7
 //}
 
+using RapidBootcamp.ConsoleApp;
+
 Console.Write("Masukan Jumlah Matakuliah: ");
 int jumlah = Convert.ToInt32(Console.ReadLine());
 
@@ -131,55 +133,41 @@ double sumOfScore = 0;
 
 for (int i = 1; i <= jumlah; i++)
 {
+
     Console.Write($"Masukan Nilai Matakuliah {i} (1-100) :");
     sumOfScore += Convert.ToDouble(Console.ReadLine());
 }
 
 double score = sumOfScore / jumlah;
 
-string grade = string.Empty;
-
-if (score >= 86 && score <= 100)
-{
-    grade = "A";
-}
-else if (score >= 71 && score <= 85)
-{
-    grade = "B";
-}
-else if (score >= 56 && score <= 70)
-{
-    grade = "C";
-}
-else if (score >= 40 && score <= 55)
-{
-    grade = "D";
-}
-else
-{
-    grade = "E";
-}
-//calculate grade
-//86-100 A
-//71-85 B
-//56-70 C
-//40-55 D
-//E
+string grade = CalculateGrade(score);
 
 Console.WriteLine($"Score: {score} - Grade: {grade}");
 
 
-class Student
+string CalculateGrade(double score)
 {
-    public string Name { get; set; }
-    public int Age { get; set; }
+    if (score >= 86 && score <= 100)
+    {
+        grade = "A";
+    }
+    else if (score >= 71 && score <= 85)
+    {
+        grade = "B";
+    }
+    else if (score >= 56 && score <= 70)
+    {
+        grade = "C";
+    }
+    else if (score >= 40 && score <= 55)
+    {
+        grade = "D";
+    }
+    else
+    {
+        grade = "E";
+    }
+    return grade;
 }
-
-class Lecturer
-{
-    public int LecturerId { get; set; }
-    public string LecturerName { get; set; }
-}
-
 
 
