@@ -228,8 +228,38 @@
 using RapidBootcamp.ConsoleApp.Domain;
 
 Student student1 = new Student();
+Student student2 = new Student();
+Student student3 = new Student("7778886543", "James");
+Student student4 = new Student("9966556654", "Affan", "Bandung");
+Student student5 = new Student
+{
+    Nim = "1122334455",
+    Name = "Budi",
+    Address = "Jakarta"
+};
+
+Lecturer lecturer1 = new Lecturer()
+{
+    LecturerId = 1,
+    LecturerName = "Joko",
+    Address = "Semarang"
+};
+Lecturer lecturer2 = new Lecturer(2, "Bams", "Jogja");
+
 //student1.setNim("9988998899");
 //student1.setName("Erick Kurniawan");
-student1.Nim = "9988998899";
-student1.Name = "Erick Kurniawan";
-Console.WriteLine(student1.Nim + " " + student1.Name);
+try
+{
+    student1.Nim = "9988998899";
+    student1.Name = "Erick Kurniawan";
+    student1.Address = "Redmond WA";
+    Console.WriteLine(student1.Nim + "\n" + student1.Name + "\n" + student1.Address);
+    Console.WriteLine($"{student2.Nim}\n{student2.Name}\n{student2.Address}");
+    Console.WriteLine($"{student3.Nim}\n{student3.Name}\n{student3.Address}");
+    Console.WriteLine($"{student4.Nim}\n{student4.Name}\n{student4.Address}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+

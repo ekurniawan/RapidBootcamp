@@ -8,6 +8,27 @@ namespace RapidBootcamp.ConsoleApp.Domain
 {
     public class Student
     {
+        //konstruktor
+        public Student()
+        {
+            Nim = "1010101010";
+            Name = "Agus Kurniawan";
+            Address = "Jakarta";
+        }
+
+        public Student(string nim, string name)
+        {
+            this.Nim = nim;
+            this.Name = name;
+        }
+
+        public Student(string nim, string name, string address)
+        {
+            this.Nim = nim;
+            this.Name = name;
+            this.Address = address;
+        }
+
         private string nim = string.Empty;
 
         //object property
@@ -44,6 +65,10 @@ namespace RapidBootcamp.ConsoleApp.Domain
             get { return name; }
             set { name = value; }
         }
+
+        public string Address { get; set; } = string.Empty;
+
+
         /*public void setName(string name)
         {
             this.name = name;
