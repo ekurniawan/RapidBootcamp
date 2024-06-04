@@ -290,6 +290,7 @@
 //    Console.WriteLine($"{student.Nim} - {student.Name} - {student.Address}");
 //}
 
+using RapidBootcamp.ConsoleApp.DAL;
 using RapidBootcamp.ConsoleApp.Domain;
 
 //Person person1 = new Person();
@@ -299,55 +300,68 @@ using RapidBootcamp.ConsoleApp.Domain;
 //Console.WriteLine(person1.GetInfo());
 
 
-Student student1 = new Student();
-student1.FullName = "Agus Kurniawan";
-student1.Address = "Bandung";
-student1.PhoneNumber = "08123456789";
-student1.Nim = "1234567890";
-student1.IPK = 3.5;
+//Student student1 = new Student();
+//student1.FullName = "Agus Kurniawan";
+//student1.Address = "Bandung";
+//student1.PhoneNumber = "08123456789";
+//student1.Nim = "1234567890";
+//student1.IPK = 3.5;
 
-Student student2 = new Student("Joe", "Jogja", "23456", "9988990077", 3.9);
-Student student3 = new Student("Tery", "Jogja", "2345889", "9988990099", 3.5);
+//Student student2 = new Student("Joe", "Jogja", "23456", "9988990077", 3.9);
+//Student student3 = new Student("Tery", "Jogja", "2345889", "9988990099", 3.5);
 
-Lecturer lecturer1 = new Lecturer();
-lecturer1.FullName = "Budi Kurniawan";
-lecturer1.Address = "Semarang";
-lecturer1.PhoneNumber = "08123456789";
-lecturer1.NIK = "1234567890";
-lecturer1.RoomNumber = "A-123";
-//Console.WriteLine(lecturer1.GetInfo());
+//Lecturer lecturer1 = new Lecturer();
+//lecturer1.FullName = "Budi Kurniawan";
+//lecturer1.Address = "Semarang";
+//lecturer1.PhoneNumber = "08123456789";
+//lecturer1.NIK = "1234567890";
+//lecturer1.RoomNumber = "A-123";
+////Console.WriteLine(lecturer1.GetInfo());
 
-SecondYearStudent secondYearStudent1 = new SecondYearStudent();
-secondYearStudent1.FullName = "Joko Kurniawan";
-secondYearStudent1.Address = "Surabaya";
-secondYearStudent1.PhoneNumber = "08123456789";
-secondYearStudent1.Nim = "1234567890";
-secondYearStudent1.IPK = 3.5;
-secondYearStudent1.Major = "Computer Science";
-secondYearStudent1.Class = "A-1";
-//Console.WriteLine(secondYearStudent1.GetInfo());
+//SecondYearStudent secondYearStudent1 = new SecondYearStudent();
+//secondYearStudent1.FullName = "Joko Kurniawan";
+//secondYearStudent1.Address = "Surabaya";
+//secondYearStudent1.PhoneNumber = "08123456789";
+//secondYearStudent1.Nim = "1234567890";
+//secondYearStudent1.IPK = 3.5;
+//secondYearStudent1.Major = "Computer Science";
+//secondYearStudent1.Class = "A-1";
+////Console.WriteLine(secondYearStudent1.GetInfo());
 
-List<Person> persons = new List<Person>();
-persons.Add(student1);
-persons.Add(student2);
-persons.Add(student3);
-persons.Add(lecturer1);
-persons.Add(secondYearStudent1);
+//List<Person> persons = new List<Person>();
+//persons.Add(student1);
+//persons.Add(student2);
+//persons.Add(student3);
+//persons.Add(lecturer1);
+//persons.Add(secondYearStudent1);
 
-ICrud crudLecturer = new Lecturer();
-crudLecturer.Insert();
-ICrud crudStudent = new Student();
-crudStudent.Insert();
+//ICrud crudLecturer = new Lecturer();
+//crudLecturer.Insert();
+//ICrud crudStudent = new Student();
+//crudStudent.Insert();
 
-foreach (IStorable storePerson in persons)
-{
-    storePerson.Store();
-}
+//foreach (IStorable storePerson in persons)
+//{
+//    storePerson.Store();
+//}
 
 /*foreach (Person person in persons)
 {
     person.Save();
 }*/
+
+CategoriesDAL categoriesDAL = new CategoriesDAL();
+var categories = categoriesDAL.GetAll();
+
+Console.WriteLine("-----------------------------------------------------------");
+Console.WriteLine("CategoryId\tCategoryName");
+foreach (Category category in categories)
+{
+    Console.WriteLine($"{category.CategoryId.ToString().PadLeft(10)} {category.CategoryName.PadRight(30)}");
+}
+Console.WriteLine("-----------------------------------------------------------");
+
+
 
 
 
