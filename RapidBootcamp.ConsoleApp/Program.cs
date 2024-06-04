@@ -351,9 +351,10 @@ using RapidBootcamp.ConsoleApp.Domain;
 }*/
 
 CategoriesDAL categoriesDAL = new CategoriesDAL();
+IEnumerable<Category> categories = new List<Category>();
 try
 {
-    var categories = categoriesDAL.GetAll();
+    categories = categoriesDAL.GetAll();
     DisplayAllData(categories);
     //Console.Write("Masukan CategoryId yang akan ditampilkan : ");
     //int categoryId = Convert.ToInt32(Console.ReadLine());
@@ -368,7 +369,7 @@ try
     //}
 
     //insert data
-    Console.Write("Masukan CategoryName yang akan disimpan : ");
+    /*Console.Write("Masukan CategoryName yang akan disimpan : ");
     string categoryName = Console.ReadLine();
     Category newCategory = new Category
     {
@@ -382,8 +383,35 @@ try
     else
     {
         Console.WriteLine("Data gagal disimpan");
-    }
+    }*/
+    Console.Write("Masukan CategoryId yang akan diupdate : ");
+    int categoryId = Convert.ToInt32(Console.ReadLine());
 
+    //cari data yang akan diupdate
+    Category categoryToUpdate = categoriesDAL.GetById(categoryId);
+    if (categoryToUpdate != null)
+    {
+        Console.Write("Masukan CategoryName yang baru : ");
+
+        categoryToUpdate.CategoryName = Console.ReadLine();
+        Category result = categoriesDAL.Update(categoryToUpdate);
+
+        if (result != null)
+        {
+            Console.WriteLine($"Data Category : {result.CategoryId} - {result.CategoryName} berhasil diupdate !");
+
+            categories = categoriesDAL.GetAll();
+            DisplayAllData(categories);
+        }
+        else
+        {
+            Console.WriteLine("Data gagal diupdate");
+        }
+    }
+    else
+    {
+        Console.WriteLine("Data tidak ditemukan");
+    }
 
 }
 catch (Exception ex)

@@ -138,7 +138,33 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public Category Update(Category entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"update Categories set CategoryName=@CategoryName 
+                                 where CategoryId=@CategoryId";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@CategoryName", entity.CategoryName);
+                _command.Parameters.AddWithValue("@CategoryId", entity.CategoryId);
+                _connection.Open();
+                int result = _command.ExecuteNonQuery();
+                if (result == 1)
+                {
+                    return entity;
+                }
+                else
+                {
+                    throw new ArgumentException("Data gagal diupdate");
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _command.Dispose();
+                _connection.Close();
+            }
         }
     }
 }
