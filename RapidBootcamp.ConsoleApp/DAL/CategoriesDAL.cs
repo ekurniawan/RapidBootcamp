@@ -52,7 +52,27 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"delete from Categories where CategoryId=@CategoryId";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@CategoryId", id);
+                _connection.Open();
+                int result = _command.ExecuteNonQuery();
+                if (result != 1)
+                {
+                    throw new ArgumentException("Data gagal dihapus");
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _command.Dispose();
+                _connection.Close();
+            }
         }
 
         public IEnumerable<Category> GetAll()

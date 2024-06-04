@@ -384,7 +384,7 @@ try
     {
         Console.WriteLine("Data gagal disimpan");
     }*/
-    Console.Write("Masukan CategoryId yang akan diupdate : ");
+    /*Console.Write("Masukan CategoryId yang akan diupdate : ");
     int categoryId = Convert.ToInt32(Console.ReadLine());
 
     //cari data yang akan diupdate
@@ -411,8 +411,23 @@ try
     else
     {
         Console.WriteLine("Data tidak ditemukan");
-    }
+    }*/
 
+    Console.Write("Masukan CategoryId yang akan didelete : ");
+    int categoryId = Convert.ToInt32(Console.ReadLine());
+    Category categoryToDelete = categoriesDAL.GetById(categoryId);
+    if (categoryToDelete != null)
+    {
+        categoriesDAL.Delete(categoryId);
+        Console.WriteLine($"Data Category : {categoryToDelete.CategoryId} - {categoryToDelete.CategoryName} berhasil dihapus !");
+
+        categories = categoriesDAL.GetAll();
+        DisplayAllData(categories);
+    }
+    else
+    {
+        Console.WriteLine("Data tidak ditemukan");
+    }
 }
 catch (Exception ex)
 {
