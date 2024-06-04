@@ -17,7 +17,8 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public CategoriesDAL()
         {
-            _connectionString = "Server=ACTUAL;Database=RapidDb;Trusted_Connection=True;";
+            //Server=localhost,1433;Database=ProductDb;User=sa;Password=Indonesia@2023;TrustServerCertificate=True;MultipleActiveResultSets=true;
+            _connectionString = @"Server=.\;Database=RapidDb;Trusted_Connection=True;";
             _connection = new SqlConnection(_connectionString);
         }
 
@@ -80,7 +81,36 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public Category GetById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Category category = new Category();
+                string query = @"SELECT * FROM Categories 
+                                 WHERE CategoryId = @CategoryId";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@CategoryId", id);
+                _connection.Open();
+                _reader = _command.ExecuteReader();
+                if (_reader.HasRows)
+                {
+                    while (_reader.Read())
+                    {
+                        category.CategoryId = Convert.ToInt32(_reader["CategoryId"]);
+                        category.CategoryName = _reader["CategoryName"].ToString();
+                    }
+                }
+
+                _reader.Close();
+                return category;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _connection.Close();
+                _command.Dispose();
+            }
         }
 
         public Category Update(Category entity)

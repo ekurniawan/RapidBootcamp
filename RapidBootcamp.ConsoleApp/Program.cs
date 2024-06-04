@@ -351,15 +351,37 @@ using RapidBootcamp.ConsoleApp.Domain;
 }*/
 
 CategoriesDAL categoriesDAL = new CategoriesDAL();
-var categories = categoriesDAL.GetAll();
-
-Console.WriteLine("-----------------------------------------------------------");
-Console.WriteLine("CategoryId\tCategoryName");
-foreach (Category category in categories)
+try
 {
-    Console.WriteLine($"{category.CategoryId.ToString().PadLeft(10)} {category.CategoryName.PadRight(30)}");
+    var categories = categoriesDAL.GetAll();
+
+    Console.WriteLine("-----------------------------------------------------------");
+    Console.WriteLine("CategoryId\tCategoryName");
+    foreach (Category category in categories)
+    {
+        Console.WriteLine($"{category.CategoryId.ToString().PadLeft(10)} {category.CategoryName.PadRight(30)}");
+    }
+    Console.WriteLine("-----------------------------------------------------------");
+
+    Console.Write("Masukan CategoryId yang akan ditampilkan : ");
+    int categoryId = Convert.ToInt32(Console.ReadLine());
+    Category resultCategory = categoriesDAL.GetById(categoryId);
+    if (resultCategory != null)
+    {
+        Console.WriteLine($"{resultCategory.CategoryId.ToString().PadLeft(10)} {resultCategory.CategoryName.PadRight(30)}");
+    }
+    else
+    {
+        Console.WriteLine("Data tidak ditemukan");
+    }
 }
-Console.WriteLine("-----------------------------------------------------------");
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+
+
+
 
 
 
