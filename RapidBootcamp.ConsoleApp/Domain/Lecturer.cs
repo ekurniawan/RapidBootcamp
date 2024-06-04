@@ -10,6 +10,11 @@ namespace RapidBootcamp.ConsoleApp.Domain
     {
         public string? NIK { get; set; }
         public string? RoomNumber { get; set; }
+
+        public override string GetInfo()
+        {
+            return $"Name: {FullName}, Address: {Address}, Phone: {PhoneNumber}, NIK: {NIK}, Room Number: {RoomNumber}";
+        }
     }
 }
 

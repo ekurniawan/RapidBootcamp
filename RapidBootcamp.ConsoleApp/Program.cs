@@ -305,6 +305,25 @@ student1.PhoneNumber = "08123456789";
 student1.Nim = "1234567890";
 student1.IPK = 3.5;
 Console.WriteLine(student1.GetInfo());
-Console.WriteLine($"Get IPK: {student1.GetIPK()}");
 
+Student student2 = new Student("Joe", "Jogja", "23456", "9988990077", 3.9);
+Console.WriteLine(student2.GetInfo());
+
+Lecturer lecturer1 = new Lecturer();
+lecturer1.FullName = "Budi Kurniawan";
+lecturer1.Address = "Semarang";
+lecturer1.PhoneNumber = "08123456789";
+lecturer1.NIK = "1234567890";
+lecturer1.RoomNumber = "A-123";
+Console.WriteLine(lecturer1.GetInfo());
+
+SecondYearStudent secondYearStudent1 = new SecondYearStudent();
+secondYearStudent1.FullName = "Joko Kurniawan";
+secondYearStudent1.Address = "Surabaya";
+secondYearStudent1.PhoneNumber = "08123456789";
+secondYearStudent1.Nim = "1234567890";
+secondYearStudent1.IPK = 3.5;
+secondYearStudent1.Major = "Computer Science";
+secondYearStudent1.Class = "A-1";
+Console.WriteLine(secondYearStudent1.GetInfo());
 
