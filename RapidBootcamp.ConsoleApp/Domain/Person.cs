@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace RapidBootcamp.ConsoleApp.Domain
 {
-    public class Person
+    public abstract class Person
     {
         public Person()
         {
@@ -29,5 +30,9 @@ namespace RapidBootcamp.ConsoleApp.Domain
         {
             return $"Name: {FullName}, Address: {Address}, Phone: {PhoneNumber}";
         }
+
+        public abstract void Save();
+        public abstract void Load();
+        public abstract string GetFullName();
     }
 }

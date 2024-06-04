@@ -11,9 +11,24 @@ namespace RapidBootcamp.ConsoleApp.Domain
         public string? NIK { get; set; }
         public string? RoomNumber { get; set; }
 
+        public override string GetFullName()
+        {
+            throw new NotImplementedException();
+        }
+
         public override string GetInfo()
         {
             return $"Name: {FullName}, Address: {Address}, Phone: {PhoneNumber}, NIK: {NIK}, Room Number: {RoomNumber}";
+        }
+
+        public override void Load()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Save()
+        {
+            throw new NotImplementedException();
         }
     }
 }

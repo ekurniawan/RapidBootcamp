@@ -33,5 +33,20 @@ namespace RapidBootcamp.ConsoleApp.Domain
         {
             return $"Name: {FullName}, Address: {Address}, Phone: {PhoneNumber}, Nim: {Nim}, IPK: {IPK}";
         }
+
+        public override void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Load()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string GetFullName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
