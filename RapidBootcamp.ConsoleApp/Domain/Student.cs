@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RapidBootcamp.ConsoleApp.Domain
 {
-    public class Student : Person
+    public class Student : Person, ICrud, IStorable, IPrintable
     {
         public Student()
         {
@@ -36,17 +36,47 @@ namespace RapidBootcamp.ConsoleApp.Domain
 
         public override void Save()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Save from Student");
         }
 
         public override void Load()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Load from Student");
         }
 
         public override string GetFullName()
         {
             throw new NotImplementedException();
+        }
+
+        public void Insert()
+        {
+            Console.WriteLine("Insert from Student");
+        }
+
+        public void Update()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Select()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Store()
+        {
+            Console.WriteLine("Store from Student");
+        }
+
+        public void Print()
+        {
+            Console.WriteLine("Print from Student");
         }
     }
 }

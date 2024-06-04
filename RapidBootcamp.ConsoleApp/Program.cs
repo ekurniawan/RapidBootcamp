@@ -299,7 +299,6 @@ using RapidBootcamp.ConsoleApp.Domain;
 //Console.WriteLine(person1.GetInfo());
 
 
-
 Student student1 = new Student();
 student1.FullName = "Agus Kurniawan";
 student1.Address = "Bandung";
@@ -308,8 +307,6 @@ student1.Nim = "1234567890";
 student1.IPK = 3.5;
 
 Student student2 = new Student("Joe", "Jogja", "23456", "9988990077", 3.9);
-Console.WriteLine(student2.GetInfo());
-
 Student student3 = new Student("Tery", "Jogja", "2345889", "9988990099", 3.5);
 
 Lecturer lecturer1 = new Lecturer();
@@ -331,15 +328,26 @@ secondYearStudent1.Class = "A-1";
 //Console.WriteLine(secondYearStudent1.GetInfo());
 
 List<Person> persons = new List<Person>();
-persons.Add(person1);
 persons.Add(student1);
 persons.Add(student2);
 persons.Add(student3);
 persons.Add(lecturer1);
 persons.Add(secondYearStudent1);
 
-foreach (Person person in persons)
+ICrud crudLecturer = new Lecturer();
+crudLecturer.Insert();
+ICrud crudStudent = new Student();
+crudStudent.Insert();
+
+foreach (IStorable storePerson in persons)
 {
-    Console.WriteLine(person.GetInfo());
+    storePerson.Store();
 }
+
+/*foreach (Person person in persons)
+{
+    person.Save();
+}*/
+
+
 
