@@ -354,26 +354,37 @@ CategoriesDAL categoriesDAL = new CategoriesDAL();
 try
 {
     var categories = categoriesDAL.GetAll();
+    DisplayAllData(categories);
+    //Console.Write("Masukan CategoryId yang akan ditampilkan : ");
+    //int categoryId = Convert.ToInt32(Console.ReadLine());
+    //Category resultCategory = categoriesDAL.GetById(categoryId);
+    //if (resultCategory != null)
+    //{
+    //    Console.WriteLine($"{resultCategory.CategoryId.ToString().PadLeft(10)} {resultCategory.CategoryName.PadRight(30)}");
+    //}
+    //else
+    //{
+    //    Console.WriteLine("Data tidak ditemukan");
+    //}
 
-    Console.WriteLine("-----------------------------------------------------------");
-    Console.WriteLine("CategoryId\tCategoryName");
-    foreach (Category category in categories)
+    //insert data
+    Console.Write("Masukan CategoryName yang akan disimpan : ");
+    string categoryName = Console.ReadLine();
+    Category newCategory = new Category
     {
-        Console.WriteLine($"{category.CategoryId.ToString().PadLeft(10)} {category.CategoryName.PadRight(30)}");
-    }
-    Console.WriteLine("-----------------------------------------------------------");
-
-    Console.Write("Masukan CategoryId yang akan ditampilkan : ");
-    int categoryId = Convert.ToInt32(Console.ReadLine());
-    Category resultCategory = categoriesDAL.GetById(categoryId);
-    if (resultCategory != null)
+        CategoryName = categoryName
+    };
+    Category result = categoriesDAL.Add(newCategory);
+    if (result != null)
     {
-        Console.WriteLine($"{resultCategory.CategoryId.ToString().PadLeft(10)} {resultCategory.CategoryName.PadRight(30)}");
+        Console.WriteLine("Data berhasil disimpan");
     }
     else
     {
-        Console.WriteLine("Data tidak ditemukan");
+        Console.WriteLine("Data gagal disimpan");
     }
+
+
 }
 catch (Exception ex)
 {
@@ -381,7 +392,16 @@ catch (Exception ex)
 }
 
 
-
+void DisplayAllData(IEnumerable<Category> categories)
+{
+    Console.WriteLine("-----------------------------------------------------------");
+    Console.WriteLine("CategoryId\tCategoryName");
+    foreach (Category category in categories)
+    {
+        Console.WriteLine($"{category.CategoryId.ToString().PadLeft(10)} {category.CategoryName.PadRight(30)}");
+    }
+    Console.WriteLine("-----------------------------------------------------------");
+}
 
 
 

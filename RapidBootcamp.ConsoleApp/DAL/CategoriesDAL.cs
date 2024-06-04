@@ -18,13 +18,41 @@ namespace RapidBootcamp.ConsoleApp.DAL
         public CategoriesDAL()
         {
             //Server=localhost,1433;Database=ProductDb;User=sa;Password=Indonesia@2023;TrustServerCertificate=True;MultipleActiveResultSets=true;
+            // _connectionString = @"Server=.\SQLEXPRESS;Database=RapidDb;Trusted_Connection=True;";
             _connectionString = @"Server=.\;Database=RapidDb;Trusted_Connection=True;";
             _connection = new SqlConnection(_connectionString);
         }
 
         public Category Add(Category entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"INSERT INTO Categories(CategoryName) 
+                                 VALUES(@CategoryName)";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@CategoryName", entity.CategoryName);
+                _connection.Open();
+
+                //menjalankan perintah insert
+                int result = _command.ExecuteNonQuery();
+                if (result == 1)
+                {
+                    return entity;
+                }
+                else
+                {
+                    throw new ArgumentException("Data gagal disimpan");
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _command.Dispose();
+                _connection.Close();
+            }
         }
 
         public void Delete(int id)
