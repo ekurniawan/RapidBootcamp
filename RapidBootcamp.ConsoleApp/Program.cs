@@ -225,26 +225,26 @@
 //}
 
 
-using RapidBootcamp.ConsoleApp.Domain;
+//using RapidBootcamp.ConsoleApp.Domain;
 
-Student student1 = new Student();
-Student student2 = new Student();
-Student student3 = new Student("7778886543", "James");
-Student student4 = new Student("9966556654", "Affan", "Bandung");
-Student student5 = new Student
-{
-    Nim = "1122334455",
-    Name = "Budi",
-    Address = "Jakarta"
-};
+//Student student1 = new Student();
+//Student student2 = new Student();
+//Student student3 = new Student("7778886543", "James");
+//Student student4 = new Student("9966556654", "Affan", "Bandung");
+//Student student5 = new Student
+//{
+//    Nim = "1122334455",
+//    Name = "Budi",
+//    Address = "Jakarta"
+//};
 
-Lecturer lecturer1 = new Lecturer()
-{
-    LecturerId = 1,
-    LecturerName = "Joko",
-    Address = "Semarang"
-};
-Lecturer lecturer2 = new Lecturer(2, "Bams", "Jogja");
+//Lecturer lecturer1 = new Lecturer()
+//{
+//    LecturerId = 1,
+//    LecturerName = "Joko",
+//    Address = "Semarang"
+//};
+//Lecturer lecturer2 = new Lecturer(2, "Bams", "Jogja");
 
 //student1.setNim("9988998899");
 //student1.setName("Erick Kurniawan");
@@ -264,32 +264,47 @@ Lecturer lecturer2 = new Lecturer(2, "Bams", "Jogja");
 //}
 
 //POCO
-List<Student> lstStudents = new List<Student>();
+//List<Student> lstStudents = new List<Student>();
 
-Console.Write("Masukan Jumlah Student: ");
-int jumlah = Convert.ToInt32(Console.ReadLine());
-int counter = 0;
-while (counter < jumlah)
-{
-    Student newStudent = new Student();
-    Console.Write("Masukan Nim: ");
-    newStudent.Nim = Console.ReadLine();
-    Console.Write("Masukan Nama: ");
-    newStudent.Name = Console.ReadLine();
-    Console.Write("Masukan Address: ");
-    newStudent.Address = Console.ReadLine();
+//Console.Write("Masukan Jumlah Student: ");
+//int jumlah = Convert.ToInt32(Console.ReadLine());
+//int counter = 0;
+//while (counter < jumlah)
+//{
+//    Student newStudent = new Student();
+//    Console.Write("Masukan Nim: ");
+//    newStudent.Nim = Console.ReadLine();
+//    Console.Write("Masukan Nama: ");
+//    newStudent.Name = Console.ReadLine();
+//    Console.Write("Masukan Address: ");
+//    newStudent.Address = Console.ReadLine();
 
-    lstStudents.Add(newStudent);
-    counter++;
-}
+//    lstStudents.Add(newStudent);
+//    counter++;
+//}
 
-Console.WriteLine("-----------------------------------------------------------");
-Console.WriteLine("Nim\tNama\tAddress");
-foreach (Student student in lstStudents)
-{
-    Console.WriteLine($"{student.Nim} - {student.Name} - {student.Address}");
-}
+//Console.WriteLine("-----------------------------------------------------------");
+//Console.WriteLine("Nim\tNama\tAddress");
+//foreach (Student student in lstStudents)
+//{
+//    Console.WriteLine($"{student.Nim} - {student.Name} - {student.Address}");
+//}
 
+using RapidBootcamp.ConsoleApp.Domain;
 
+Person person1 = new Person();
+person1.FullName = "Erick Kurniawan";
+person1.Address = "Jakarta";
+person1.PhoneNumber = "08123456789";
+Console.WriteLine(person1.GetInfo());
+
+Student student1 = new Student();
+student1.FullName = "Agus Kurniawan";
+student1.Address = "Bandung";
+student1.PhoneNumber = "08123456789";
+student1.Nim = "1234567890";
+student1.IPK = 3.5;
+Console.WriteLine(student1.GetInfo());
+Console.WriteLine($"Get IPK: {student1.GetIPK()}");
 
 
