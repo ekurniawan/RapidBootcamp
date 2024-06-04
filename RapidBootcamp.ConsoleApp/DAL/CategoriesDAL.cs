@@ -28,21 +28,16 @@ namespace RapidBootcamp.ConsoleApp.DAL
             try
             {
                 string query = @"INSERT INTO Categories(CategoryName) 
-                                 VALUES(@CategoryName)";
+                                 VALUES(@CategoryName);select @@identity";
                 _command = new SqlCommand(query, _connection);
                 _command.Parameters.AddWithValue("@CategoryName", entity.CategoryName);
                 _connection.Open();
 
                 //menjalankan perintah insert
-                int result = _command.ExecuteNonQuery();
-                if (result == 1)
-                {
-                    return entity;
-                }
-                else
-                {
-                    throw new ArgumentException("Data gagal disimpan");
-                }
+                int lastCategoryId = Convert.ToInt32(_command.ExecuteScalar());
+                entity.CategoryId = lastCategoryId;
+
+                return entity;
             }
             catch (SqlException sqlEx)
             {

@@ -377,7 +377,7 @@ try
     Category result = categoriesDAL.Add(newCategory);
     if (result != null)
     {
-        Console.WriteLine("Data berhasil disimpan");
+        Console.WriteLine($"Data Category : {newCategory.CategoryId} - {newCategory.CategoryName} berhasil ditambah !");
     }
     else
     {
