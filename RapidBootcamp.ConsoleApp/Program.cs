@@ -413,7 +413,7 @@ try
         Console.WriteLine("Data tidak ditemukan");
     }*/
 
-    Console.Write("Masukan CategoryId yang akan didelete : ");
+    /*Console.Write("Masukan CategoryId yang akan didelete : ");
     int categoryId = Convert.ToInt32(Console.ReadLine());
     Category categoryToDelete = categoriesDAL.GetById(categoryId);
     if (categoryToDelete != null)
@@ -423,6 +423,18 @@ try
 
         categories = categoriesDAL.GetAll();
         DisplayAllData(categories);
+    }
+    else
+    {
+        Console.WriteLine("Data tidak ditemukan");
+    }*/
+
+    Console.Write("Masukan CategoryName yang akan dicari : ");
+    string categoryName = Console.ReadLine();
+    IEnumerable<Category> resultCategories = categoriesDAL.GetByCategoryName(categoryName);
+    if (resultCategories != null)
+    {
+        DisplayAllData(resultCategories);
     }
     else
     {

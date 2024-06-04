@@ -119,7 +119,38 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public IEnumerable<Category> GetByCategoryName(string categoryName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"SELECT * FROM Categories 
+                                 WHERE CategoryName like @CategoryName";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@CategoryName", "%" + categoryName + "%");
+                _connection.Open();
+                _reader = _command.ExecuteReader();
+                List<Category> categories = new List<Category>();
+                if (_reader.HasRows)
+                {
+                    while (_reader.Read())
+                    {
+                        categories.Add(new Category
+                        {
+                            CategoryId = Convert.ToInt32(_reader["CategoryId"]),
+                            CategoryName = _reader["CategoryName"].ToString()
+                        });
+                    }
+                }
+                _reader.Close();
+                return categories;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _command.Dispose();
+                _connection.Close();
+            }
         }
 
         public Category GetById(int id)
