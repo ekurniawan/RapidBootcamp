@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RapidBootcamp.WebApplication.DAL;
 using RapidBootcamp.WebApplication.Models;
 
 namespace RapidBootcamp.WebApplication.Controllers
 {
     public class CategoriesController : Controller
     {
+        private readonly ICategory _categoryDal;
+        public CategoriesController(ICategory categoryDal)
+        {
+            _categoryDal = categoryDal;
+        }
+
         // GET: CategoriesController
         public ActionResult Index()
         {
-            List<Category> categories = new List<Category>();
-            categories.Add(new Category { CategoryId = 1, CategoryName = "Laptop" });
-            categories.Add(new Category { CategoryId = 2, CategoryName = "Smartphone" });
-            categories.Add(new Category { CategoryId = 3, CategoryName = "Tablet" });
-            categories.Add(new Category { CategoryId = 4, CategoryName = "Desktop" });
-            categories.Add(new Category { CategoryId = 5, CategoryName = "Smartwatch" });
-
+            var categories = _categoryDal.GetAll();
             return View(categories);
         }
 
