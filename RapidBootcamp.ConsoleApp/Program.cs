@@ -459,13 +459,50 @@ using RapidBootcamp.ConsoleApp.Domain;
 //}
 
 ProductsDAL productsDAL = new ProductsDAL();
-var products = productsDAL.GetAll();
 
+
+
+
+Console.Write("Masukan Product Name :");
+string productName = Console.ReadLine();
+Console.Write("Masukan Category Id :");
+int categoryId = Convert.ToInt32(Console.ReadLine());
+Console.Write("Masukan Price :");
+decimal price = Convert.ToDecimal(Console.ReadLine());
+Console.Write("Masukan Stock :");
+int stock = Convert.ToInt32(Console.ReadLine());
+
+try
+{
+    var newProduct = new Product
+    {
+        ProductName = productName,
+        CategoryId = categoryId,
+        Price = price,
+        Stock = stock
+    };
+    Product result = productsDAL.Add(newProduct);
+    if (result != null)
+    {
+        Console.WriteLine($"Data Product : {result.ProductId} - {result.ProductName} berhasil ditambah !");
+    }
+    else
+    {
+        Console.WriteLine("Data gagal disimpan");
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+
+
+var products = productsDAL.GetProducsWithCategory();
 Console.WriteLine("-----------------------------------------------------------");
-Console.WriteLine("ProductId\tProductName\tCategoryId\tPrice\tStock");
+Console.WriteLine("ProductId\tProductName\tCategoryName\tPrice\t\tStock");
 foreach (Product product in products)
 {
-    Console.WriteLine($"{product.ProductId.ToString().PadLeft(9)}\t{product.ProductName}\t{product.CategoryId.ToString().PadLeft(8)}\t{string.Format("{0:N0}", product.Price)}\t{product.Stock.ToString()}");
+    Console.WriteLine($"{product.ProductId.ToString().PadLeft(9)}\t{product.ProductName}\t{product.Category.CategoryName.ToString().PadLeft(12)}\t{string.Format("{0:N0}", product.Price)}\t{product.Stock.ToString()}");
 }
 Console.WriteLine("-----------------------------------------------------------");
 

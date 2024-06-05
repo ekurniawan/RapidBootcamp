@@ -23,7 +23,28 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public Product Add(Product entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"INSERT INTO Products(ProductName,CategoryId,Price,Stock) 
+                                VALUES(@ProductName,@CategoryId,@Price,@Stock);SELECT @@identity";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@ProductName", entity.ProductName);
+                _command.Parameters.AddWithValue("@CategoryId", entity.CategoryId);
+                _command.Parameters.AddWithValue("@Price", entity.Price);
+                _command.Parameters.AddWithValue("@Stock", entity.Stock);
+                _connection.Open();
+                entity.ProductId = Convert.ToInt32(_command.ExecuteScalar());
+                return entity;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _connection.Close();
+                _command.Dispose();
+            }
         }
 
         public void Delete(int id)
@@ -150,6 +171,50 @@ namespace RapidBootcamp.ConsoleApp.DAL
         public IEnumerable<Product> GetByProductName(string productName)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Product> GetProducsWithCategory()
+        {
+            try
+            {
+                string query = @"select p.ProductId,p.CategoryId,p.ProductName,p.Stock,p.Price,c.CategoryName
+                                 from Products p inner join Categories c on p.CategoryId=c.CategoryId
+                                 order by p.ProductName";
+                _command = new SqlCommand(query, _connection);
+                _connection.Open();
+                _reader = _command.ExecuteReader();
+                List<Product> products = new List<Product>();
+                if (_reader.HasRows)
+                {
+                    while (_reader.Read())
+                    {
+                        products.Add(new Product
+                        {
+                            ProductId = Convert.ToInt32(_reader["ProductId"]),
+                            ProductName = _reader["ProductName"].ToString(),
+                            CategoryId = Convert.ToInt32(_reader["CategoryId"]),
+                            Price = Convert.ToDecimal(_reader["Price"]),
+                            Stock = Convert.ToInt32(_reader["Stock"]),
+                            Category = new Category
+                            {
+                                CategoryId = Convert.ToInt32(_reader["CategoryId"]),
+                                CategoryName = _reader["CategoryName"].ToString()
+                            }
+                        });
+                    }
+                }
+                _reader.Close();
+                return products;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _connection.Close();
+                _command.Dispose();
+            }
         }
 
         public Product Update(Product entity)
