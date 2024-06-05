@@ -350,115 +350,122 @@ using RapidBootcamp.ConsoleApp.Domain;
     person.Save();
 }*/
 
-CategoriesDAL categoriesDAL = new CategoriesDAL();
-IEnumerable<Category> categories = new List<Category>();
-try
+//CategoriesDAL categoriesDAL = new CategoriesDAL();
+//IEnumerable<Category> categories = new List<Category>();
+//try
+//{
+//    categories = categoriesDAL.GetAll();
+//    DisplayAllData(categories);
+//    //Console.Write("Masukan CategoryId yang akan ditampilkan : ");
+//    //int categoryId = Convert.ToInt32(Console.ReadLine());
+//    //Category resultCategory = categoriesDAL.GetById(categoryId);
+//    //if (resultCategory != null)
+//    //{
+//    //    Console.WriteLine($"{resultCategory.CategoryId.ToString().PadLeft(10)} {resultCategory.CategoryName.PadRight(30)}");
+//    //}
+//    //else
+//    //{
+//    //    Console.WriteLine("Data tidak ditemukan");
+//    //}
+
+//    //insert data
+//    /*Console.Write("Masukan CategoryName yang akan disimpan : ");
+//    string categoryName = Console.ReadLine();
+//    Category newCategory = new Category
+//    {
+//        CategoryName = categoryName
+//    };
+//    Category result = categoriesDAL.Add(newCategory);
+//    if (result != null)
+//    {
+//        Console.WriteLine($"Data Category : {newCategory.CategoryId} - {newCategory.CategoryName} berhasil ditambah !");
+//    }
+//    else
+//    {
+//        Console.WriteLine("Data gagal disimpan");
+//    }*/
+//    /*Console.Write("Masukan CategoryId yang akan diupdate : ");
+//    int categoryId = Convert.ToInt32(Console.ReadLine());
+
+//    //cari data yang akan diupdate
+//    Category categoryToUpdate = categoriesDAL.GetById(categoryId);
+//    if (categoryToUpdate != null)
+//    {
+//        Console.Write("Masukan CategoryName yang baru : ");
+
+//        categoryToUpdate.CategoryName = Console.ReadLine();
+//        Category result = categoriesDAL.Update(categoryToUpdate);
+
+//        if (result != null)
+//        {
+//            Console.WriteLine($"Data Category : {result.CategoryId} - {result.CategoryName} berhasil diupdate !");
+
+//            categories = categoriesDAL.GetAll();
+//            DisplayAllData(categories);
+//        }
+//        else
+//        {
+//            Console.WriteLine("Data gagal diupdate");
+//        }
+//    }
+//    else
+//    {
+//        Console.WriteLine("Data tidak ditemukan");
+//    }*/
+
+//    /*Console.Write("Masukan CategoryId yang akan didelete : ");
+//    int categoryId = Convert.ToInt32(Console.ReadLine());
+//    Category categoryToDelete = categoriesDAL.GetById(categoryId);
+//    if (categoryToDelete != null)
+//    {
+//        categoriesDAL.Delete(categoryId);
+//        Console.WriteLine($"Data Category : {categoryToDelete.CategoryId} - {categoryToDelete.CategoryName} berhasil dihapus !");
+
+//        categories = categoriesDAL.GetAll();
+//        DisplayAllData(categories);
+//    }
+//    else
+//    {
+//        Console.WriteLine("Data tidak ditemukan");
+//    }*/
+
+//    Console.Write("Masukan CategoryName yang akan dicari : ");
+//    string categoryName = Console.ReadLine();
+//    IEnumerable<Category> resultCategories = categoriesDAL.GetByCategoryName(categoryName);
+//    if (resultCategories != null)
+//    {
+//        DisplayAllData(resultCategories);
+//    }
+//    else
+//    {
+//        Console.WriteLine("Data tidak ditemukan");
+//    }
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine($"Error: {ex.Message}");
+//}
+
+
+//void DisplayAllData(IEnumerable<Category> categories)
+//{
+//    Console.WriteLine("-----------------------------------------------------------");
+//    Console.WriteLine("CategoryId\tCategoryName");
+//    foreach (Category category in categories)
+//    {
+//        Console.WriteLine($"{category.CategoryId.ToString().PadLeft(10)} {category.CategoryName.PadRight(30)}");
+//    }
+//    Console.WriteLine("-----------------------------------------------------------");
+//}
+
+ProductsDAL productsDAL = new ProductsDAL();
+var products = productsDAL.GetAll();
+
+Console.WriteLine("-----------------------------------------------------------");
+Console.WriteLine("ProductId\tProductName\tCategoryId\tPrice\tStock");
+foreach (Product product in products)
 {
-    categories = categoriesDAL.GetAll();
-    DisplayAllData(categories);
-    //Console.Write("Masukan CategoryId yang akan ditampilkan : ");
-    //int categoryId = Convert.ToInt32(Console.ReadLine());
-    //Category resultCategory = categoriesDAL.GetById(categoryId);
-    //if (resultCategory != null)
-    //{
-    //    Console.WriteLine($"{resultCategory.CategoryId.ToString().PadLeft(10)} {resultCategory.CategoryName.PadRight(30)}");
-    //}
-    //else
-    //{
-    //    Console.WriteLine("Data tidak ditemukan");
-    //}
-
-    //insert data
-    /*Console.Write("Masukan CategoryName yang akan disimpan : ");
-    string categoryName = Console.ReadLine();
-    Category newCategory = new Category
-    {
-        CategoryName = categoryName
-    };
-    Category result = categoriesDAL.Add(newCategory);
-    if (result != null)
-    {
-        Console.WriteLine($"Data Category : {newCategory.CategoryId} - {newCategory.CategoryName} berhasil ditambah !");
-    }
-    else
-    {
-        Console.WriteLine("Data gagal disimpan");
-    }*/
-    /*Console.Write("Masukan CategoryId yang akan diupdate : ");
-    int categoryId = Convert.ToInt32(Console.ReadLine());
-
-    //cari data yang akan diupdate
-    Category categoryToUpdate = categoriesDAL.GetById(categoryId);
-    if (categoryToUpdate != null)
-    {
-        Console.Write("Masukan CategoryName yang baru : ");
-
-        categoryToUpdate.CategoryName = Console.ReadLine();
-        Category result = categoriesDAL.Update(categoryToUpdate);
-
-        if (result != null)
-        {
-            Console.WriteLine($"Data Category : {result.CategoryId} - {result.CategoryName} berhasil diupdate !");
-
-            categories = categoriesDAL.GetAll();
-            DisplayAllData(categories);
-        }
-        else
-        {
-            Console.WriteLine("Data gagal diupdate");
-        }
-    }
-    else
-    {
-        Console.WriteLine("Data tidak ditemukan");
-    }*/
-
-    /*Console.Write("Masukan CategoryId yang akan didelete : ");
-    int categoryId = Convert.ToInt32(Console.ReadLine());
-    Category categoryToDelete = categoriesDAL.GetById(categoryId);
-    if (categoryToDelete != null)
-    {
-        categoriesDAL.Delete(categoryId);
-        Console.WriteLine($"Data Category : {categoryToDelete.CategoryId} - {categoryToDelete.CategoryName} berhasil dihapus !");
-
-        categories = categoriesDAL.GetAll();
-        DisplayAllData(categories);
-    }
-    else
-    {
-        Console.WriteLine("Data tidak ditemukan");
-    }*/
-
-    Console.Write("Masukan CategoryName yang akan dicari : ");
-    string categoryName = Console.ReadLine();
-    IEnumerable<Category> resultCategories = categoriesDAL.GetByCategoryName(categoryName);
-    if (resultCategories != null)
-    {
-        DisplayAllData(resultCategories);
-    }
-    else
-    {
-        Console.WriteLine("Data tidak ditemukan");
-    }
+    Console.WriteLine($"{product.ProductId.ToString().PadLeft(9)}\t{product.ProductName}\t{product.CategoryId.ToString().PadLeft(8)}\t{string.Format("{0:N0}", product.Price)}\t{product.Stock.ToString()}");
 }
-catch (Exception ex)
-{
-    Console.WriteLine($"Error: {ex.Message}");
-}
-
-
-void DisplayAllData(IEnumerable<Category> categories)
-{
-    Console.WriteLine("-----------------------------------------------------------");
-    Console.WriteLine("CategoryId\tCategoryName");
-    foreach (Category category in categories)
-    {
-        Console.WriteLine($"{category.CategoryId.ToString().PadLeft(10)} {category.CategoryName.PadRight(30)}");
-    }
-    Console.WriteLine("-----------------------------------------------------------");
-}
-
-
-
-
+Console.WriteLine("-----------------------------------------------------------");
 
