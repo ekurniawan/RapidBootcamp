@@ -49,7 +49,27 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"delete from Products where ProductId=@ProductId";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@ProductId", id);
+                _connection.Open();
+                int result = _command.ExecuteNonQuery();
+                if (result != 1)
+                {
+                    throw new ArgumentException("Delete failed");
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _command.Dispose();
+                _connection.Close();
+            }
         }
 
         public IEnumerable<Product> GetAll()
@@ -219,7 +239,35 @@ namespace RapidBootcamp.ConsoleApp.DAL
 
         public Product Update(Product entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"update Products set ProductName=@ProductName,CategoryId=@CategoryId,Price=@Price,Stock=@Stock
+                                where ProductId=@ProductId";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@ProductName", entity.ProductName);
+                _command.Parameters.AddWithValue("@CategoryId", entity.CategoryId);
+                _command.Parameters.AddWithValue("@Price", entity.Price);
+                _command.Parameters.AddWithValue("@Stock", entity.Stock);
+                _command.Parameters.AddWithValue("@ProductId", entity.ProductId);
+
+                _connection.Open();
+                int result = _command.ExecuteNonQuery();
+                if (result != 1)
+                {
+                    throw new ArgumentException("Update failed");
+                }
+
+                return entity;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _command.Dispose();
+                _connection.Close();
+            }
         }
     }
 }

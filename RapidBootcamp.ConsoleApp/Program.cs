@@ -463,39 +463,58 @@ ProductsDAL productsDAL = new ProductsDAL();
 
 
 
-Console.Write("Masukan Product Name :");
-string productName = Console.ReadLine();
-Console.Write("Masukan Category Id :");
-int categoryId = Convert.ToInt32(Console.ReadLine());
-Console.Write("Masukan Price :");
-decimal price = Convert.ToDecimal(Console.ReadLine());
-Console.Write("Masukan Stock :");
-int stock = Convert.ToInt32(Console.ReadLine());
+//Console.Write("Masukan Product Name :");
+//string productName = Console.ReadLine();
+//Console.Write("Masukan Category Id :");
+//int categoryId = Convert.ToInt32(Console.ReadLine());
+//Console.Write("Masukan Price :");
+//decimal price = Convert.ToDecimal(Console.ReadLine());
+//Console.Write("Masukan Stock :");
+//int stock = Convert.ToInt32(Console.ReadLine());
 
-try
-{
-    var newProduct = new Product
-    {
-        ProductName = productName,
-        CategoryId = categoryId,
-        Price = price,
-        Stock = stock
-    };
-    Product result = productsDAL.Add(newProduct);
-    if (result != null)
-    {
-        Console.WriteLine($"Data Product : {result.ProductId} - {result.ProductName} berhasil ditambah !");
-    }
-    else
-    {
-        Console.WriteLine("Data gagal disimpan");
-    }
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Error: {ex.Message}");
-}
+//try
+//{
+//    var newProduct = new Product
+//    {
+//        ProductName = productName,
+//        CategoryId = categoryId,
+//        Price = price,
+//        Stock = stock
+//    };
+//    Product result = productsDAL.Add(newProduct);
+//    if (result != null)
+//    {
+//        Console.WriteLine($"Data Product : {result.ProductId} - {result.ProductName} berhasil ditambah !");
+//    }
+//    else
+//    {
+//        Console.WriteLine("Data gagal disimpan");
+//    }
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine($"Error: {ex.Message}");
+//}
 
+
+//update Products
+Console.Write("Masukan ProductId yang akan diupdate : ");
+int productId = Convert.ToInt32(Console.ReadLine());
+Product productToUpdate = productsDAL.GetById(productId);
+if (productToUpdate != null)
+{
+    Console.Write("Masukan ProductName yang baru : ");
+    productToUpdate.ProductName = Console.ReadLine();
+    Console.Write("Masukan CategoryId yang baru : ");
+    productToUpdate.CategoryId = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Masukan Price yang baru : ");
+    productToUpdate.Price = Convert.ToDecimal(Console.ReadLine());
+    Console.Write("Masukan Stock yang baru : ");
+    productToUpdate.Stock = Convert.ToInt32(Console.ReadLine());
+
+    Product result = productsDAL.Update(productToUpdate);
+    Console.WriteLine($"Data Product : {result.ProductId} - {result.ProductName} berhasil diupdate !");
+}
 
 var products = productsDAL.GetProducsWithCategory();
 Console.WriteLine("-----------------------------------------------------------");
