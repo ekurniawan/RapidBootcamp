@@ -23,7 +23,8 @@ namespace RapidBootcamp.WebApplication.Controllers
         // GET: CategoriesController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var category = _categoryDal.GetById(id);
+            return View(category);
         }
 
         // GET: CategoriesController/Create

@@ -42,7 +42,18 @@ namespace RapidBootcamp.WebApplication.DAL
 
         public Category GetById(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string query = @"select * from Categories
+                                 where CategoryId = @CategoryId";
+                var param = new { CategoryId = id };
+                var category = conn.QuerySingleOrDefault<Category>(query, param);
+                if (category == null)
+                {
+                    throw new ArgumentException("Data not found");
+                }
+                return category;
+            }
         }
 
         public Category Update(Category entity)
