@@ -103,6 +103,8 @@ namespace RapidBootcamp.WebApplication.DAL
                 string query = @"select * from Categories
                                  where CategoryName like @CategoryName
                                  order by CategoryName asc";
+
+
                 var param = new { CategoryName = "%" + categoryName + "%" };
                 var categories = conn.Query<Category>(query, param);
                 return categories;
