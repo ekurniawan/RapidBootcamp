@@ -35,11 +35,11 @@ namespace RapidBootcamp.WebApplication.Controllers
 
         // POST: CategoriesController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Category category)
         {
             try
             {
+                var result = _categoryDal.Add(category);
                 return RedirectToAction(nameof(Index));
             }
             catch

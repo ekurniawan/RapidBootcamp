@@ -21,7 +21,22 @@ namespace RapidBootcamp.WebApplication.DAL
 
         public Category Add(Category entity)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                try
+                {
+                    string query = @"insert into Categories(CategoryName)
+                                 values(@CategoryName);select @@identity";
+                    var param = new { CategoryName = entity.CategoryName };
+                    int newId = conn.ExecuteScalar<int>(query, param);
+                    entity.CategoryId = newId;
+                    return entity;
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new ArgumentException(sqlEx.Message);
+                }
+            }
         }
 
         public void Delete(int id)
@@ -58,10 +73,26 @@ namespace RapidBootcamp.WebApplication.DAL
 
         public Category Update(Category entity)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                try
+                {
+                    string query = @"update Categories set CategoryName = @CategoryName
+                                     where CategoryId = @CategoryId";
+                    var param = new { CategoryName = entity.CategoryName, CategoryId = entity.CategoryId };
+                    conn.Execute(query, param);
+                    return entity;
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new ArgumentException(sqlEx.Message);
+                }
+            }
         }
 
-
-
+        public IEnumerable<Category> GetCategoriesByName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
