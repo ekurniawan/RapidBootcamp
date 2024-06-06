@@ -16,7 +16,13 @@ namespace RapidBootcamp.WebApplication.Controllers
         // GET: CategoriesController
         public ActionResult Index()
         {
+            if (TempData["Message"] != null)
+            {
+                ViewBag.Message = TempData["Message"];
+            }
+
             var categories = _categoryDal.GetAll();
+
             return View(categories);
         }
 
@@ -40,18 +46,22 @@ namespace RapidBootcamp.WebApplication.Controllers
             try
             {
                 var result = _categoryDal.Add(category);
+
+                TempData["Message"] = $"Category {category.CategoryName} added successfully";
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                ViewBag.ErrorMessage = "Category not added";
                 return View();
             }
         }
 
         // GET: CategoriesController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, string nama, string alamat)
         {
-            return View();
+            return Content($"Id yang akan diedit: {id} - {nama} - {alamat}");
         }
 
         // POST: CategoriesController/Edit/5
