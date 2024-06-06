@@ -14,14 +14,21 @@ namespace RapidBootcamp.WebApplication.Controllers
         }
 
         // GET: CategoriesController
-        public ActionResult Index()
+        public ActionResult Index(string categoryname = "")
         {
             if (TempData["Message"] != null)
             {
                 ViewBag.Message = TempData["Message"];
             }
-
-            var categories = _categoryDal.GetAll();
+            IEnumerable<Category> categories;
+            if (categoryname != "")
+            {
+                categories = _categoryDal.GetCategoriesByName(categoryname);
+            }
+            else
+            {
+                categories = _categoryDal.GetAll();
+            }
 
             return View(categories);
         }
@@ -59,22 +66,27 @@ namespace RapidBootcamp.WebApplication.Controllers
         }
 
         // GET: CategoriesController/Edit/5
-        public ActionResult Edit(int id, string nama, string alamat)
+        public ActionResult Edit(int id)
         {
-            return Content($"Id yang akan diedit: {id} - {nama} - {alamat}");
+            var category = _categoryDal.GetById(id);
+            return View(category);
         }
 
         // POST: CategoriesController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Category category)
         {
             try
             {
+                var result = _categoryDal.Update(category);
+
+                TempData["Message"] = $"Category {category.CategoryName} updated successfully";
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                ViewBag.ErrorMessage = "Category not updated";
                 return View();
             }
         }
@@ -82,20 +94,24 @@ namespace RapidBootcamp.WebApplication.Controllers
         // GET: CategoriesController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var category = _categoryDal.GetById(id);
+            return View(category);
         }
 
         // POST: CategoriesController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [ActionName("Delete")]
+        public ActionResult DeletePost(int CategoryId)
         {
             try
             {
+                _categoryDal.Delete(CategoryId);
+                TempData["Message"] = $"Category with id:{CategoryId} deleted successfully";
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                ViewBag.ErrorMessage = "Category not deleted";
                 return View();
             }
         }

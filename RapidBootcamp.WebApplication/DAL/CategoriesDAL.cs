@@ -41,7 +41,13 @@ namespace RapidBootcamp.WebApplication.DAL
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string query = @"delete from Categories
+                                 where CategoryId = @CategoryId";
+                var param = new { CategoryId = id };
+                conn.Execute(query, param);
+            }
         }
 
         public IEnumerable<Category> GetAll()
@@ -90,9 +96,17 @@ namespace RapidBootcamp.WebApplication.DAL
             }
         }
 
-        public IEnumerable<Category> GetCategoriesByName()
+        public IEnumerable<Category> GetCategoriesByName(string categoryName)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(GetConnStr()))
+            {
+                string query = @"select * from Categories
+                                 where CategoryName like @CategoryName
+                                 order by CategoryName asc";
+                var param = new { CategoryName = "%" + categoryName + "%" };
+                var categories = conn.Query<Category>(query, param);
+                return categories;
+            }
         }
     }
 }
