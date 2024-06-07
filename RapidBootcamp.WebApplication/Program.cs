@@ -15,6 +15,7 @@ builder.Services.AddControllersWithViews();
 //menambahkan DI
 //builder.Services.AddScoped<ICategory, CategoriesDAL>();
 builder.Services.AddScoped<ICategory, CategoriesEF>();
+builder.Services.AddScoped<IProduct, ProductsEF>();
 
 var app = builder.Build();
 
