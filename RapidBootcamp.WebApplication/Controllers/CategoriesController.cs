@@ -29,7 +29,6 @@ namespace RapidBootcamp.WebApplication.Controllers
             {
                 categories = _categoryDal.GetAll();
             }
-
             return View(categories);
         }
 

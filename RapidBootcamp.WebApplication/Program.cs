@@ -13,6 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddControllersWithViews();
 
 //menambahkan DI
+//builder.Services.AddScoped<ICategory, CategoriesDAL>();
 builder.Services.AddScoped<ICategory, CategoriesEF>();
 
 var app = builder.Build();
