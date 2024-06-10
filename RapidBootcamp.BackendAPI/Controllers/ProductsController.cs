@@ -33,6 +33,20 @@ namespace RapidBootcamp.BackendAPI.Controllers
             return product;
         }
 
+        [HttpGet("ByCategory/{categoryId}")]
+        public IEnumerable<Product> GetByCategory(int categoryId)
+        {
+            var products = _product.GetByCategory(categoryId);
+            return products;
+        }
+
+        [HttpGet("ByProductName")]
+        public IEnumerable<Product> GetByProductName(string name)
+        {
+            var products = _product.GetByProductName(name);
+            return products;
+        }
+
         // POST api/<ProductsController>
         [HttpPost]
         public void Post([FromBody] string value)
