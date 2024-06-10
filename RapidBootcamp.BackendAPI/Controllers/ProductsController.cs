@@ -49,20 +49,61 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post(Product product)
         {
+            try
+            {
+                var result = _product.Add(product);
+                return CreatedAtAction(nameof(Get), new { id = result.ProductId }, result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] Product product)
         {
+            var updateProduct = _product.GetById(id);
+            if (updateProduct == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                updateProduct.ProductName = product.ProductName;
+                updateProduct.CategoryId = product.CategoryId;
+                updateProduct.Stock = product.Stock;
+                updateProduct.Price = product.Price;
+                var result = _product.Update(updateProduct);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var deleteProduct = _product.GetById(id);
+            if (deleteProduct == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _product.Delete(id);
+                return Ok($"Product {id} berhasil didelete..");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
