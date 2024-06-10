@@ -11,15 +11,15 @@ namespace RapidBootcamp.BackendAPI.DAL
     public class CategoriesDAL : ICategory
     {
         private string? _connectionString;
+        private readonly IConfiguration _config;
         private SqlConnection _connection;
         private SqlCommand _command;
         private SqlDataReader _reader;
 
-        public CategoriesDAL()
+        public CategoriesDAL(IConfiguration config)
         {
-            //Server=localhost,1433;Database=ProductDb;User=sa;Password=Indonesia@2023;TrustServerCertificate=True;MultipleActiveResultSets=true;
-            // _connectionString = @"Server=.\SQLEXPRESS;Database=RapidDb;Trusted_Connection=True;";
-            _connectionString = @"Server=.\;Database=RapidDb;Trusted_Connection=True;";
+            _config = config;
+            _connectionString = _config.GetConnectionString("DefaultConnection");
             _connection = new SqlConnection(_connectionString);
         }
 
