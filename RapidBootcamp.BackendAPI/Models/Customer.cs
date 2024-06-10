@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RapidBootcamp.WebApplication.Models
+namespace RapidBootcamp.BackendAPI.Models
 {
     public class Customer
     {
