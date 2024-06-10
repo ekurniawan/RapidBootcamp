@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RapidBootcamp.BackendAPI.DAL;
 using RapidBootcamp.BackendAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,29 +10,49 @@ namespace RapidBootcamp.BackendAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
+        private readonly ICategory _category;
+        public CategoriesController(ICategory category)
+        {
+            _category = category;
+        }
+
         // GET: api/<CategoriesController>
         [HttpGet]
         public IEnumerable<Category> Get()
         {
-            List<Category> categories = new List<Category>()
-            {
-                new Category {CategoryId=1,CategoryName="Laptop Game"},
-                new Category {CategoryId=2,CategoryName="Laptop Business"}
-            };
+            var categories = _category.GetAll();
             return categories;
         }
 
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Category Get(int id)
         {
-            return "value";
+            var category = _category.GetById(id);
+            return category;
+        }
+
+        [HttpGet("ByName")]
+        public IEnumerable<Category> GetByName(string name)
+        {
+            var categories = _category.GetByCategoryName(name);
+            return categories;
         }
 
         // POST api/<CategoriesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Category category)
         {
+            try
+            {
+                var result = _category.Add(category);
+                return CreatedAtAction(nameof(Get),
+                    new { id = category.CategoryId }, category);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT api/<CategoriesController>/5
