@@ -41,7 +41,7 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // POST api/<CategoriesController>
         [HttpPost]
-        public IActionResult Post(Category category)
+        public ActionResult Post(Category category)
         {
             try
             {
@@ -57,14 +57,44 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // PUT api/<CategoriesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, Category category)
         {
+            var updateData = _category.GetById(id);
+            try
+            {
+                if (updateData != null)
+                {
+                    updateData.CategoryName = category.CategoryName;
+                    var result = _category.Update(updateData);
+                    return Ok(result);
+                }
+                return BadRequest($"Category {category.CategoryName} not found");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message}");
+            }
         }
+
 
         // DELETE api/<CategoriesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            try
+            {
+                var deleteData = _category.GetById(id);
+                if (deleteData != null)
+                {
+                    _category.Delete(deleteData.CategoryId);
+                    return Ok($"Data Category Id {id} berhasil didelete");
+                }
+                return BadRequest($"Data Category Id {id} Not Found !");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Could not delete {ex.Message}");
+            }
         }
     }
 }
