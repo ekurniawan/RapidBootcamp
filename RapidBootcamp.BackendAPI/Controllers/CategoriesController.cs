@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RapidBootcamp.BackendAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,9 +11,14 @@ namespace RapidBootcamp.BackendAPI.Controllers
     {
         // GET: api/<CategoriesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Category> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<Category> categories = new List<Category>()
+            {
+                new Category {CategoryId=1,CategoryName="Laptop Game"},
+                new Category {CategoryId=2,CategoryName="Laptop Business"}
+            };
+            return categories;
         }
 
         // GET api/<CategoriesController>/5
