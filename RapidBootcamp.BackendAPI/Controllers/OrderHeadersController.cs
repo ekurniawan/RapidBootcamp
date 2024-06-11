@@ -65,6 +65,13 @@ namespace RapidBootcamp.BackendAPI.Controllers
                 orderHeader.OrderHeaderId = newOrderHeaderIdString;
 
                 var result = _orderHeaders.Add(orderHeader);
+
+                foreach (var item in orderHeader.OrderDetails)
+                {
+                    item.OrderHeaderId = newOrderHeaderIdString;
+                    _orderDetail.Add(item);
+                }
+
                 return Ok(result);
             }
             catch (System.Exception ex)

@@ -75,7 +75,31 @@ namespace RapidBootcamp.BackendAPI.DAL
 
         public OrderDetail Add(OrderDetail entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string query = @"insert into OrderDetails(OrderHeaderId,ProductId,Qty,Price) 
+                                 values(@OrderHeaderId,@ProductId,@Qty,@Price);
+                                 select @@identity";
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@OrderHeaderId", entity.OrderHeaderId);
+                _command.Parameters.AddWithValue("@ProductId", entity.ProductId);
+                _command.Parameters.AddWithValue("@Qty", entity.Qty);
+                _command.Parameters.AddWithValue("@Price", entity.Price);
+                _connection.Open();
+
+                int id = Convert.ToInt32(_command.ExecuteScalar());
+                entity.OrderDetailId = id;
+                return entity;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
+            finally
+            {
+                _command.Dispose();
+                _connection.Close();
+            }
         }
 
         public OrderDetail Update(OrderDetail entity)
@@ -88,4 +112,6 @@ namespace RapidBootcamp.BackendAPI.DAL
             throw new NotImplementedException();
         }
     }
+
+
 }
