@@ -23,6 +23,7 @@ namespace RapidBootcamp.WebApplication.Controllers
         public IActionResult Details(string firstname, string lastname)
         {
             return Content($"Hello {firstname} {lastname}");
+
         }
 
         public IActionResult Privacy()

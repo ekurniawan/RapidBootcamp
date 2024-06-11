@@ -4,11 +4,10 @@ namespace RapidBootcamp.BackendAPI.Models
 {
     public class Customer
     {
-        [Key]
         public int CustomerId { get; set; }
-        public string? CustomerName { get; set; }
-        public string? Email { get; set; }
+        public string CustomerName { get; set; } = null!;
+        public string Email { get; set; } = null!;
 
-        public IEnumerable<OrderHeader>? OrderHeaders { get; set; }
+        public IEnumerable<Wallet>? Wallets { get; set; }
     }
 }
