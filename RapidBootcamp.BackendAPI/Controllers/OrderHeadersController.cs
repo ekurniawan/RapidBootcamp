@@ -14,9 +14,12 @@ namespace RapidBootcamp.BackendAPI.Controllers
     public class OrderHeadersController : ControllerBase
     {
         private readonly IOrderHeaders _orderHeaders;
-        public OrderHeadersController(IOrderHeaders orderHeaders)
+        private readonly IOrderDetail _orderDetail;
+
+        public OrderHeadersController(IOrderHeaders orderHeaders, IOrderDetail orderDetail)
         {
             _orderHeaders = orderHeaders;
+            _orderDetail = orderDetail;
         }
 
         // GET: api/<OrderHeadersController>
@@ -24,6 +27,11 @@ namespace RapidBootcamp.BackendAPI.Controllers
         public IEnumerable<OrderHeader> Get()
         {
             var results = _orderHeaders.GetAll();
+            foreach (var item in results)
+            {
+                item.OrderDetails = _orderDetail.GetDetailsByHeaderId(item.OrderHeaderId);
+            }
+
             return results;
         }
 
