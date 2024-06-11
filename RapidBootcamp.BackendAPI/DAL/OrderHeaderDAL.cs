@@ -12,8 +12,6 @@ namespace RapidBootcamp.BackendAPI.DAL
         private SqlCommand _command;
         private SqlDataReader _reader;
 
-
-
         public OrderHeaderDAL(IConfiguration config)
         {
             _config = config;

@@ -1,6 +1,7 @@
 ﻿
 using RapidBootcamp.BackendAPI.Models;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace RapidBootcamp.BackendAPI.DAL
 {
@@ -75,30 +76,51 @@ namespace RapidBootcamp.BackendAPI.DAL
 
         public OrderDetail Add(OrderDetail entity)
         {
-            try
+            using (TransactionScope scope = new TransactionScope())
             {
-                string query = @"insert into OrderDetails(OrderHeaderId,ProductId,Qty,Price) 
+                try
+                {
+
+                    string query = @"insert into OrderDetails(OrderHeaderId,ProductId,Qty,Price) 
                                  values(@OrderHeaderId,@ProductId,@Qty,@Price);
                                  select @@identity";
-                _command = new SqlCommand(query, _connection);
-                _command.Parameters.AddWithValue("@OrderHeaderId", entity.OrderHeaderId);
-                _command.Parameters.AddWithValue("@ProductId", entity.ProductId);
-                _command.Parameters.AddWithValue("@Qty", entity.Qty);
-                _command.Parameters.AddWithValue("@Price", entity.Price);
-                _connection.Open();
+                    _command = new SqlCommand(query, _connection);
+                    _command.Parameters.AddWithValue("@OrderHeaderId", entity.OrderHeaderId);
+                    _command.Parameters.AddWithValue("@ProductId", entity.ProductId);
+                    _command.Parameters.AddWithValue("@Qty", entity.Qty);
+                    _command.Parameters.AddWithValue("@Price", entity.Price);
+                    _connection.Open();
 
-                int id = Convert.ToInt32(_command.ExecuteScalar());
-                entity.OrderDetailId = id;
-                return entity;
-            }
-            catch (SqlException sqlEx)
-            {
-                throw new ArgumentException(sqlEx.Message);
-            }
-            finally
-            {
-                _command.Dispose();
-                _connection.Close();
+                    int id = Convert.ToInt32(_command.ExecuteScalar());
+                    entity.OrderDetailId = id;
+
+                    //update stock di product
+
+                    string queryUpdate = @"update Products set Stock=Stock-@Qty where ProductId=@ProductId";
+                    SqlCommand cmdUpdate = new SqlCommand(queryUpdate, _connection);
+                    cmdUpdate.Parameters.AddWithValue("@Qty", entity.Qty);
+                    cmdUpdate.Parameters.AddWithValue("@ProductId", entity.ProductId);
+                    cmdUpdate.ExecuteNonQuery();
+
+                    scope.Complete();
+
+                    return entity;
+
+                }
+                catch (SqlException sqlEx)
+                {
+                    throw new ArgumentException(sqlEx.Message);
+                }
+                catch (TransactionException tranEx)
+                {
+                    throw new ArgumentException(tranEx.Message);
+                }
+                finally
+                {
+                    _command.Dispose();
+                    _connection.Close();
+                    scope.Dispose();
+                }
             }
         }
 
@@ -110,6 +132,25 @@ namespace RapidBootcamp.BackendAPI.DAL
         public void Delete(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public decimal GetTotalAmount(string orderHeaderId)
+        {
+            try
+            {
+                string query = @"select sum(Price*Qty) from OrderDetails 
+                                 where OrderHeaderId=@OrderHeaderId";
+
+                _command = new SqlCommand(query, _connection);
+                _command.Parameters.AddWithValue("@OrderHeaderId", orderHeaderId);
+                _connection.Open();
+                decimal totalAmount = Convert.ToDecimal(_command.ExecuteScalar());
+                return totalAmount;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ArgumentException(sqlEx.Message);
+            }
         }
     }
 
