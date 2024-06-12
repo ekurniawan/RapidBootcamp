@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RapidBootcamp.BackendAPI.DAL;
+using RapidBootcamp.BackendAPI.DTO;
 using RapidBootcamp.BackendAPI.Models;
 using RapidBootcamp.BackendAPI.ViewModels;
 
@@ -24,15 +25,32 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // GET: api/<OrderHeadersController>
         [HttpGet]
-        public IEnumerable<OrderHeader> Get()
+        public IEnumerable<OrderHeaderDTO> Get()
         {
+            List<OrderHeaderDTO> orderHeaderDTOs = new List<OrderHeaderDTO>();
             var results = _orderHeaders.GetAll();
             foreach (var item in results)
             {
-                item.OrderDetails = _orderDetail.GetDetailsByHeaderId(item.OrderHeaderId);
+                OrderHeaderDTO orderHeaderDTO = new OrderHeaderDTO
+                {
+                    WalletId = item.WalletId,
+                    TransactionDate = item.TransactionDate,
+                    OrderHeaderId = item.OrderHeaderId,
+                    CustomerName = item.Wallet.Customer.CustomerName,
+                    WalletName = item.Wallet.WalletType.WalletName,
+                    Saldo = item.Wallet.Saldo
+                };
+                orderHeaderDTOs.Add(orderHeaderDTO);
             }
 
-            return results;
+            return orderHeaderDTOs;
+
+            //foreach (var item in results)
+            //{
+            //    item.OrderDetails = _orderDetail.GetDetailsByHeaderId(item.OrderHeaderId);
+            //}
+
+
         }
 
         [HttpGet("View")]
