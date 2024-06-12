@@ -10,14 +10,16 @@ namespace RapidBootcamp.BackendAPI.DAL
         private string? _connectionString;
         private readonly IConfiguration _config;
         private readonly IOrderDetail _orderDetail;
+        private readonly IWallet _wallet;
         private SqlConnection _connection;
         private SqlCommand _command;
         private SqlDataReader _reader;
 
-        public OrderHeaderDAL(IConfiguration config, IOrderDetail orderDetail)
+        public OrderHeaderDAL(IConfiguration config, IOrderDetail orderDetail, IWallet wallet)
         {
             _config = config;
             _orderDetail = orderDetail;
+            _wallet = wallet;
             _connectionString = _config.GetConnectionString("DefaultConnection");
             _connection = new SqlConnection(_connectionString);
         }
@@ -29,6 +31,7 @@ namespace RapidBootcamp.BackendAPI.DAL
             {
                 try
                 {
+                    //buat nomor order header baru
                     string lastOrderHeaderId = GetOrderLastHeaderId();
 
                     lastOrderHeaderId = lastOrderHeaderId.Substring(4, 4);
@@ -44,6 +47,7 @@ namespace RapidBootcamp.BackendAPI.DAL
                     _connection.Open();
                     _command.ExecuteNonQuery();
 
+                    //tambah item detail produk yg dijual
                     if (entity.OrderDetails != null)
                     {
                         foreach (var item in entity.OrderDetails)
@@ -52,6 +56,17 @@ namespace RapidBootcamp.BackendAPI.DAL
                             _orderDetail.Add(item);
                         }
                     }
+
+                    //cek wallet saldo
+                    decimal saldo = _wallet.GetWalletSaldo(entity.WalletId);
+                    decimal total = _orderDetail.GetTotalAmount(newOrderHeaderIdString);
+                    if (saldo < total)
+                    {
+                        throw new ArgumentException("Saldo tidak mencukupi");
+                    }
+                    //update saldo wallet
+                    saldo -= total;
+                    _wallet.UpdateWalletSaldo(entity.WalletId, saldo);
 
                     scope.Complete();
 
