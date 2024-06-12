@@ -28,6 +28,7 @@ namespace RapidBootcamp.BackendAPI.DAL
                 .Include(oh => oh.Wallet).ThenInclude(w => w.Customer)
                 .Include(oh => oh.Wallet).ThenInclude(w => w.WalletType)
                 .Include(oh => oh.OrderDetails).ThenInclude(od => od.Product).ThenInclude(p => p.Category).ToList();
+
             return results;
         }
 

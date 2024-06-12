@@ -8,5 +8,6 @@
         public decimal Saldo { get; set; }
         public string WalletName { get; set; } = null!;
         public string CustomerName { get; set; } = null!;
+        public List<OrderDetailDTO>? OrderDetails { get; set; }
     }
 }

@@ -31,6 +31,22 @@ namespace RapidBootcamp.BackendAPI.Controllers
             var results = _orderHeaders.GetAll();
             foreach (var item in results)
             {
+
+                List<OrderDetailDTO> detailDTOs = new List<OrderDetailDTO>();
+                foreach (var detail in item.OrderDetails)
+                {
+                    OrderDetailDTO orderDetailDTO = new OrderDetailDTO
+                    {
+                        OrderDetailId = detail.OrderDetailId,
+                        Price = detail.Price,
+                        CategoryName = detail.Product.Category.CategoryName,
+                        ProductId = detail.ProductId,
+                        ProductName = detail.Product.ProductName,
+                        Qty = detail.Qty
+                    };
+                    detailDTOs.Add(orderDetailDTO);
+                }
+
                 OrderHeaderDTO orderHeaderDTO = new OrderHeaderDTO
                 {
                     WalletId = item.WalletId,
@@ -38,9 +54,12 @@ namespace RapidBootcamp.BackendAPI.Controllers
                     OrderHeaderId = item.OrderHeaderId,
                     CustomerName = item.Wallet.Customer.CustomerName,
                     WalletName = item.Wallet.WalletType.WalletName,
-                    Saldo = item.Wallet.Saldo
+                    Saldo = item.Wallet.Saldo,
+                    OrderDetails = detailDTOs
                 };
+
                 orderHeaderDTOs.Add(orderHeaderDTO);
+
             }
 
             return orderHeaderDTOs;
