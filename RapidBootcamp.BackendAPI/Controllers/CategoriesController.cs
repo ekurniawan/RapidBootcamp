@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RapidBootcamp.BackendAPI.DAL;
+using RapidBootcamp.BackendAPI.DTO;
 using RapidBootcamp.BackendAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,18 +19,35 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // GET: api/<CategoriesController>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable<CategoryDTO> Get()
         {
+            List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
             var categories = _category.GetAll();
-            return categories;
+
+            foreach (var category in categories)
+            {
+                CategoryDTO categoryDTO = new CategoryDTO
+                {
+                    CategoryId = category.CategoryId,
+                    CategoryName = category.CategoryName
+                };
+                categoryDTOs.Add(categoryDTO);
+            }
+            return categoryDTOs;
         }
 
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
-        public Category Get(int id)
+        public CategoryDTO Get(int id)
         {
             var category = _category.GetById(id);
-            return category;
+            CategoryDTO categoryDTO = new CategoryDTO
+            {
+                CategoryId = category.CategoryId,
+                CategoryName = category.CategoryName
+            };
+
+            return categoryDTO;
         }
 
         [HttpGet("ByName")]
@@ -41,13 +59,24 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // POST api/<CategoriesController>
         [HttpPost]
-        public ActionResult Post(Category category)
+        public ActionResult Post(CreateCategoryDto createCategoryDto)
         {
             try
             {
+                Category category = new Category
+                {
+                    CategoryName = createCategoryDto.CategoryName
+                };
                 var result = _category.Add(category);
+
+                CategoryDTO categoryDTO = new CategoryDTO
+                {
+                    CategoryId = result.CategoryId,
+                    CategoryName = result.CategoryName
+                };
+
                 return CreatedAtAction(nameof(Get),
-                    new { id = category.CategoryId }, category);
+                    new { id = category.CategoryId }, categoryDTO);
             }
             catch (Exception ex)
             {
