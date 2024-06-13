@@ -8,8 +8,6 @@ namespace RapidBootcamp.ReverseEF.DatabaseCF;
 
 public partial class RapidDbCFContext : DbContext
 {
-
-
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }

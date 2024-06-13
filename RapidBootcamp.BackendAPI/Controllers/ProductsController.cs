@@ -46,11 +46,24 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public Product Get(int id)
+        public ProductDTO Get(int id)
         {
             var product = _product.GetById(id);
 
-            return product;
+            var productDto = new ProductDTO
+            {
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                Stock = product.Stock,
+                Price = product.Price,
+                Category = new CategoryDTO
+                {
+                    CategoryId = product.Category.CategoryId,
+                    CategoryName = product.Category.CategoryName
+                }
+            };
+
+            return productDto;
         }
 
         [HttpGet("ByCategory/{categoryId}")]

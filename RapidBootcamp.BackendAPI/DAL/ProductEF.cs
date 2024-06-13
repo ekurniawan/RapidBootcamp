@@ -34,7 +34,13 @@ namespace RapidBootcamp.BackendAPI.DAL
 
         public Product GetById(int id)
         {
-            throw new NotImplementedException();
+            Product result = _appDbContext.Products.Include(p => p.Category)
+                .FirstOrDefault(p => p.ProductId == id);
+            if (result == null)
+            {
+                throw new Exception("Product not found");
+            }
+            return result;
         }
 
         public IEnumerable<Product> GetByProductName(string productName)
