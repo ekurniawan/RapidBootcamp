@@ -12,7 +12,16 @@ namespace RapidBootcamp.BackendAPI.DAL
 
         public Category Add(Category entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _appDbContext.Categories.Add(entity);
+                _appDbContext.SaveChanges();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
 
         public void Delete(int id)

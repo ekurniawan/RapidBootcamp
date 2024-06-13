@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using CsvHelper;
 using System.Globalization;
+using System.Text;
 using System.Text.Json;
 //membuat alias
 using Database1 = RapidBootcamp.ReverseEF.Models;
@@ -90,19 +91,41 @@ var httClient = new HttpClient();
 //}
 
 //akses product by id
-try
+//try
+//{
+//    Console.Write("Masukan ID Product :");
+//    var id = Convert.ToInt32(Console.ReadLine());
+//    var response = await httClient.GetAsync($"http://localhost:5168/api/Products/{id}");
+//    if (response.IsSuccessStatusCode)
+//    {
+//        var data = await response.Content.ReadAsStringAsync();
+//        Database1.Product product = JsonSerializer.Deserialize<Database1.Product>(data);
+//        Console.WriteLine($"{product.ProductId} - {product.ProductName} - {product.Price} - {product.Category.CategoryName}");
+//    }
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine(ex.InnerException.Message);
+//}
+
+using (var reader = new StreamReader("C:\\Workshop\\2024\\RapidBootcamp\\Categories.csv"))
 {
-    Console.Write("Masukan ID Product :");
-    var id = Convert.ToInt32(Console.ReadLine());
-    var response = await httClient.GetAsync($"http://localhost:5168/api/Products/{id}");
-    if (response.IsSuccessStatusCode)
+    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
     {
-        var data = await response.Content.ReadAsStringAsync();
-        Database1.Product product = JsonSerializer.Deserialize<Database1.Product>(data);
-        Console.WriteLine($"{product.ProductId} - {product.ProductName} - {product.Price} - {product.Category.CategoryName}");
+        var records = csv.GetRecords<Database1.Category>();
+        foreach (var item in records)
+        {
+            var newCategory = JsonSerializer.Serialize<Database1.Category>(item);
+            var content = new StringContent(newCategory, Encoding.UTF8, "application/json");
+            var response = await httClient.PostAsync("http://localhost:5168/api/Categories", content);
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Data Category {item.CategoryName} berhasil di insert");
+            }
+            else
+            {
+                Console.WriteLine($"Data Category {item.CategoryName} gagal di insert");
+            }
+        }
     }
-}
-catch (Exception ex)
-{
-    Console.WriteLine(ex.InnerException.Message);
 }
