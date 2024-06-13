@@ -18,6 +18,10 @@ namespace RapidBootcamp.WebApplication.Models
         [Required]
         public string Email { get; set; } = null!;
 
+        [Required]
+        [StringLength(255)]
+        public string Address { get; set; } = null!;
+
         public IEnumerable<OrderHeader>? OrderHeaders { get; set; }
     }
 }

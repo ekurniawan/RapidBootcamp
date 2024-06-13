@@ -12,8 +12,8 @@ using RapidBootcamp.WebApplication.DAL;
 namespace RapidBootcamp.WebApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240613014345_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240613020933_Add_Colum_Address_Table_Customers")]
+    partial class Add_Colum_Address_Table_Customers
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,11 @@ namespace RapidBootcamp.WebApplication.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
@@ -106,14 +111,9 @@ namespace RapidBootcamp.WebApplication.Migrations
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WalletId")
-                        .HasColumnType("int");
-
                     b.HasKey("OrderHeaderId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("WalletId");
 
                     b.ToTable("OrderHeaders");
                 });
@@ -146,31 +146,6 @@ namespace RapidBootcamp.WebApplication.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("RapidBootcamp.WebApplication.Models.Wallet", b =>
-                {
-                    b.Property<int>("WalletId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WalletId"));
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Saldo")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("WalletName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("WalletId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Wallets");
-                });
-
             modelBuilder.Entity("RapidBootcamp.WebApplication.Models.OrderDetail", b =>
                 {
                     b.HasOne("RapidBootcamp.WebApplication.Models.OrderHeader", "OrderHeader")
@@ -198,15 +173,7 @@ namespace RapidBootcamp.WebApplication.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RapidBootcamp.WebApplication.Models.Wallet", "Wallet")
-                        .WithMany("OrderHeaders")
-                        .HasForeignKey("WalletId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Customer");
-
-                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("RapidBootcamp.WebApplication.Models.Product", b =>
@@ -218,17 +185,6 @@ namespace RapidBootcamp.WebApplication.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("RapidBootcamp.WebApplication.Models.Wallet", b =>
-                {
-                    b.HasOne("RapidBootcamp.WebApplication.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("RapidBootcamp.WebApplication.Models.Category", b =>
@@ -249,11 +205,6 @@ namespace RapidBootcamp.WebApplication.Migrations
             modelBuilder.Entity("RapidBootcamp.WebApplication.Models.Product", b =>
                 {
                     b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("RapidBootcamp.WebApplication.Models.Wallet", b =>
-                {
-                    b.Navigation("OrderHeaders");
                 });
 #pragma warning restore 612, 618
         }

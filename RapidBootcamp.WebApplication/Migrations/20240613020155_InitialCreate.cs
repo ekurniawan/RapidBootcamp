@@ -61,34 +61,12 @@ namespace RapidBootcamp.WebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Wallets",
-                columns: table => new
-                {
-                    WalletId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    WalletName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Saldo = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Wallets", x => x.WalletId);
-                    table.ForeignKey(
-                        name: "FK_Wallets_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderHeaders",
                 columns: table => new
                 {
                     OrderHeaderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    WalletId = table.Column<int>(type: "int", nullable: false)
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,12 +76,6 @@ namespace RapidBootcamp.WebApplication.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderHeaders_Wallets_WalletId",
-                        column: x => x.WalletId,
-                        principalTable: "Wallets",
-                        principalColumn: "WalletId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -151,19 +123,9 @@ namespace RapidBootcamp.WebApplication.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderHeaders_WalletId",
-                table: "OrderHeaders",
-                column: "WalletId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Wallets_CustomerId",
-                table: "Wallets",
-                column: "CustomerId");
         }
 
         /// <inheritdoc />
@@ -179,13 +141,10 @@ namespace RapidBootcamp.WebApplication.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Wallets");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Customers");
         }
     }
 }

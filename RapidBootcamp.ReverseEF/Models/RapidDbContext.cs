@@ -8,10 +8,6 @@ namespace RapidBootcamp.ReverseEF.Models;
 
 public partial class RapidDbContext : DbContext
 {
-    public RapidDbContext(DbContextOptions<RapidDbContext> options)
-        : base(options)
-    {
-    }
 
     public virtual DbSet<Category> Categories { get; set; }
 
@@ -26,6 +22,13 @@ public partial class RapidDbContext : DbContext
     public virtual DbSet<Wallet> Wallets { get; set; }
 
     public virtual DbSet<WalletType> WalletTypes { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+        //add connection string here
+        optionsBuilder.UseSqlServer("Server=ACTUAL;Database=RapidDb;Trusted_Connection=True;TrustServerCertificate=True;");
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -6,7 +6,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Models",
+   "OutputPath": "DatabaseCF",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "RapidBootcamp.ReverseEF",
    "Schemas": null,
@@ -32,14 +32,6 @@
       },
       {
          "Name": "[dbo].[Products]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Wallets]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[WalletTypes]",
          "ObjectType": 0
       }
    ],
