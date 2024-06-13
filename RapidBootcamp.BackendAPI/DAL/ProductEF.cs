@@ -62,7 +62,20 @@ namespace RapidBootcamp.BackendAPI.DAL
 
         public Product Update(Product entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var updateProduct = GetById(entity.ProductId);
+                updateProduct.ProductName = entity.ProductName;
+                updateProduct.CategoryId = entity.CategoryId;
+                updateProduct.Stock = entity.Stock;
+                updateProduct.Price = entity.Price;
+                _appDbContext.SaveChanges();
+                return updateProduct;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
     }
 }

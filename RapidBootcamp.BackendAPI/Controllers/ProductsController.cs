@@ -97,7 +97,7 @@ namespace RapidBootcamp.BackendAPI.Controllers
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Product product)
+        public ActionResult Put(int id, [FromBody] UpdateProductDto updateProductDto)
         {
             var updateProduct = _product.GetById(id);
             if (updateProduct == null)
@@ -106,12 +106,25 @@ namespace RapidBootcamp.BackendAPI.Controllers
             }
             try
             {
-                updateProduct.ProductName = product.ProductName;
-                updateProduct.CategoryId = product.CategoryId;
-                updateProduct.Stock = product.Stock;
-                updateProduct.Price = product.Price;
+                updateProduct.ProductName = updateProductDto.ProductName;
+                updateProduct.CategoryId = updateProductDto.CategoryId;
+                updateProduct.Stock = updateProductDto.Stock;
+                updateProduct.Price = updateProductDto.Price;
                 var result = _product.Update(updateProduct);
-                return Ok(result);
+
+                ProductDTO productDTO = new ProductDTO
+                {
+                    ProductId = result.ProductId,
+                    ProductName = result.ProductName,
+                    Stock = result.Stock,
+                    Price = result.Price,
+                    Category = new CategoryDTO
+                    {
+                        CategoryId = result.Category.CategoryId,
+                        CategoryName = result.Category.CategoryName
+                    }
+                };
+                return Ok(productDTO);
             }
             catch (Exception ex)
             {
