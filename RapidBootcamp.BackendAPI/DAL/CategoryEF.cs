@@ -26,7 +26,16 @@ namespace RapidBootcamp.BackendAPI.DAL
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var deleteCategory = GetById(id);
+                _appDbContext.Categories.Remove(deleteCategory);
+                _appDbContext.SaveChanges();
+            }
+            catch (Exception sqlEx)
+            {
+                throw new Exception(sqlEx.Message);
+            }
         }
 
         public IEnumerable<Category> GetAll()
@@ -42,7 +51,12 @@ namespace RapidBootcamp.BackendAPI.DAL
 
         public Category GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = _appDbContext.Categories.Find(id);
+            if (result == null)
+            {
+                throw new Exception("Category not found");
+            }
+            return result;
         }
 
         public Category Update(Category entity)

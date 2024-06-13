@@ -112,13 +112,8 @@ namespace RapidBootcamp.BackendAPI.Controllers
         {
             try
             {
-                var deleteData = _category.GetById(id);
-                if (deleteData != null)
-                {
-                    _category.Delete(deleteData.CategoryId);
-                    return Ok($"Data Category Id {id} berhasil didelete");
-                }
-                return BadRequest($"Data Category Id {id} Not Found !");
+                _category.Delete(id);
+                return Ok($"Data Category Id {id} berhasil didelete");
             }
             catch (Exception ex)
             {

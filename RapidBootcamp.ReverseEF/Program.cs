@@ -132,59 +132,57 @@ var httClient = new HttpClient();
 //    }
 //}
 
-var db2Products = db2.Products.ToList();
-foreach (var item in db2Products)
-{
-    var db1Product = new Database1.Product
-    {
-        ProductId = item.ProductId,
-        CategoryId = item.CategoryId,
-        ProductName = item.ProductName,
-        Price = item.Price,
-        Stock = item.Stock,
-    };
-
-    try
-    {
-        var serializeProduct = JsonSerializer.Serialize<Database1.Product>(db1Product);
-        var content = new StringContent(serializeProduct, Encoding.UTF8, "application/json");
-        var response = await httClient.PutAsync($"http://localhost:5168/api/Products/{item.ProductId}", content);
-        if (response.IsSuccessStatusCode)
-        {
-            Console.WriteLine($"Data Product {item.ProductName} berhasil di update");
-        }
-        else
-        {
-            Console.WriteLine($"Data Product {item.ProductName} gagal di update");
-        }
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.InnerException.Message);
-    }
-
-}
-
-
-//using (var reader = new StreamReader("C:\\Workshop\\2024\\RapidBootcamp\\Categories.csv"))
+//var db2Products = db2.Products.ToList();
+//foreach (var item in db2Products)
 //{
-//    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+//    var db1Product = new Database1.Product
 //    {
-//        var records = csv.GetRecords<Database1.Category>();
-//        foreach (var item in records)
+//        ProductId = item.ProductId,
+//        CategoryId = item.CategoryId,
+//        ProductName = item.ProductName,
+//        Price = item.Price,
+//        Stock = item.Stock,
+//    };
+
+//    try
+//    {
+//        var serializeProduct = JsonSerializer.Serialize<Database1.Product>(db1Product);
+//        var content = new StringContent(serializeProduct, Encoding.UTF8, "application/json");
+//        var response = await httClient.PutAsync($"http://localhost:5168/api/Products/{item.ProductId}", content);
+//        if (response.IsSuccessStatusCode)
 //        {
-//            var newCategory = JsonSerializer.Serialize<Database1.Category>(item);
-//            var content = new StringContent(newCategory, Encoding.UTF8, "application/json");
-//            var response = await httClient.PostAsync("http://localhost:5168/api/Categories", content);
-//            if (response.IsSuccessStatusCode)
-//            {
-//                Console.WriteLine($"Data Category {item.CategoryName} berhasil di insert");
-//            }
-//            else
-//            {
-//                Console.WriteLine($"Data Category {item.CategoryName} gagal di insert");
-//            }
+//            Console.WriteLine($"Data Product {item.ProductName} berhasil di update");
+//        }
+//        else
+//        {
+//            Console.WriteLine($"Data Product {item.ProductName} gagal di update");
 //        }
 //    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine(ex.InnerException.Message);
+//    }
+
 //}
+
+
+using (var reader = new StreamReader("C:\\Workshop\\2024\\RapidBootcamp\\Categories.csv"))
+{
+    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+    {
+        var records = csv.GetRecords<Database1.Category>();
+        foreach (var item in records)
+        {
+            var response = await httClient.DeleteAsync($"http://localhost:5168/api/Categories/{item.CategoryId}");
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Data Category {item.CategoryName} berhasil di delete");
+            }
+            else
+            {
+                Console.WriteLine($"Data Category {item.CategoryName} gagal di delete");
+            }
+        }
+    }
+}
 
