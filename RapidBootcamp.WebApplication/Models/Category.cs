@@ -5,6 +5,9 @@ namespace RapidBootcamp.WebApplication.Models
     public class Category
     {
         public int CategoryId { get; set; }
+
+        [Required]
+        [StringLength(255)]
         public string CategoryName { get; set; } = null!;
 
         //navigation property

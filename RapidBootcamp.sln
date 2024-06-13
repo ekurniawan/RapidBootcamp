@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBootcamp.ConsoleApp", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBootcamp.WebApplication", "RapidBootcamp.WebApplication\RapidBootcamp.WebApplication.csproj", "{F186CD43-923C-4CFE-A0F1-94C1E1B79CCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidBootcamp.BackendAPI", "RapidBootcamp.BackendAPI\RapidBootcamp.BackendAPI.csproj", "{82BC65AB-DBB1-4912-99E9-48A4D2E3E807}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RapidBootcamp.BackendAPI", "RapidBootcamp.BackendAPI\RapidBootcamp.BackendAPI.csproj", "{82BC65AB-DBB1-4912-99E9-48A4D2E3E807}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RapidBootcamp.ReverseEF", "RapidBootcamp.ReverseEF\RapidBootcamp.ReverseEF.csproj", "{B74134BA-72D7-4855-99A5-2AB9BC9EA3CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{82BC65AB-DBB1-4912-99E9-48A4D2E3E807}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82BC65AB-DBB1-4912-99E9-48A4D2E3E807}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82BC65AB-DBB1-4912-99E9-48A4D2E3E807}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B74134BA-72D7-4855-99A5-2AB9BC9EA3CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B74134BA-72D7-4855-99A5-2AB9BC9EA3CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B74134BA-72D7-4855-99A5-2AB9BC9EA3CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B74134BA-72D7-4855-99A5-2AB9BC9EA3CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
